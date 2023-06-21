@@ -1,0 +1,29 @@
+filebackedarray package
+=======================
+
+Submodules
+----------
+
+filebackedarray.backedH5 module
+-------------------------------
+
+.. automodule:: filebackedarray.backedH5
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+filebackedarray.utils module
+----------------------------
+
+.. automodule:: filebackedarray.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: filebackedarray
+   :members:
+   :undoc-members:
+   :show-inheritance:
