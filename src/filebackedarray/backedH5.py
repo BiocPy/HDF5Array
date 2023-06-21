@@ -5,7 +5,7 @@ import h5py
 from .utils import _check_indices, _slice_h5_sparse, infer_h5_dataset
 
 
-class H5Backed:
+class H5BackedData:
     """H5 backed matrix or array store.
 
     Args:
