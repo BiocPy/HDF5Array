@@ -1,6 +1,7 @@
 from typing import Optional, Sequence, Tuple, Union
 
 import h5py
+import numpy as np
 
 from .utils import _check_indices, infer_h5_dataset
 
@@ -31,6 +32,12 @@ class H5BackedDenseData:
         self._h5file = h5py.File(path, mode="r")
         self._dataset = self._h5file[group]
         self._dataset_info = infer_h5_dataset(self._dataset)
+
+        if order not in ("C", "F"):
+            raise ValueError(
+                "order must be C (c-style, row-major) or F (fortran-style, column-major)"
+            )
+
         self._order = order
 
         if self._dataset_info.format != "dense":
@@ -71,7 +78,7 @@ class H5BackedDenseData:
     def __getitem__(
         self,
         args: Tuple[Union[slice, Sequence[int]], Optional[Union[slice, Sequence[int]]]],
-    ):
+    ) -> np.ndarray:
         if len(args) == 0:
             raise ValueError("Arguments must contain one slice")
 

@@ -1,6 +1,7 @@
 from typing import Optional, Sequence, Tuple, Union
 
 import h5py
+import scipy.sparse as sp
 
 from .utils import _check_indices, _slice_h5_sparse, infer_h5_dataset
 
@@ -67,7 +68,7 @@ class H5BackedSparseData:
     def __getitem__(
         self,
         args: Tuple[Union[slice, Sequence[int]], Optional[Union[slice, Sequence[int]]]],
-    ):
+    ) -> sp.spmatrix:
         if len(args) == 0:
             raise ValueError("Arguments must contain one slice")
 
