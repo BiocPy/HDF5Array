@@ -4,7 +4,6 @@ from typing import Optional, Sequence, Union
 import h5py
 from scipy import sparse as sp
 
-
 __author__ = "jkanche"
 __copyright__ = "jkanche"
 __license__ = "MIT"
@@ -49,7 +48,10 @@ def infer_h5_dataset(dataset: h5py.Group, verbose: bool = False) -> H5DatasetInf
         shape = tuple(shape)
 
         format = "csc_matrix"
-        print("length of indptr", dataset["indptr"], len(dataset["indptr"]))
+
+        if verbose:
+            print("length of indptr", dataset["indptr"], len(dataset["indptr"]))
+
         if shape[0] == len(dataset["indptr"]) - 1:
             format = "csr_matrix"
 
@@ -112,7 +114,7 @@ def _extract_along_idx(
     return mformat((data, indices, indptr), shape=shape)
 
 
-def _get_mat_class(sparse_format):
+def _get_mat_class(sparse_format: str):
     if sparse_format == "csr_matrix":
         return sp.csc_matrix
     elif sparse_format == "csc_matrix":
