@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>filebackedarray.utils - FileBackedArray 0.0.2 documentation</title>
+        <title>filebackedarray.utils - FileBackedArray 0.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">FileBackedArray 0.0.2 documentation</div></a>
+      <a href="../../index.html"><div class="brand">FileBackedArray 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">FileBackedArray 0.0.2 documentation</span>
+  <span class="sidebar-brand-text">FileBackedArray 0.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -204,6 +204,12 @@
 <span class="kn">import</span> <span class="nn">h5py</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">sparse</span> <span class="k">as</span> <span class="n">sp</span>
 
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;jkanche&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;jkanche&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;MIT&quot;</span>
+
+
 <span class="n">H5DatasetInfo</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;H5DatasetInfo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">,</span> <span class="s2">&quot;format&quot;</span><span class="p">])</span>
 
 
@@ -246,12 +252,14 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;length of indptr&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;indptr&quot;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;indptr&quot;</span><span class="p">]))</span>
         <span class="k">if</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;indptr&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
             <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;csr_matrix&quot;</span>
+
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># dense</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shape</span>
         <span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;dense&quot;</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
 
-    <span class="n">dtype</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
     <span class="k">return</span> <span class="n">H5DatasetInfo</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span></div>
 
 

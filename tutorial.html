@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Contributing" href="contributing.html" /><link rel="prev" title="FileBackedArray" href="readme.html" />
 
     <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>Tutorial - FileBackedArray 0.0.2 documentation</title>
+        <title>Tutorial - FileBackedArray 0.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">FileBackedArray 0.0.2 documentation</div></a>
+      <a href="index.html"><div class="brand">FileBackedArray 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">FileBackedArray 0.0.2 documentation</span>
+  <span class="sidebar-brand-text">FileBackedArray 0.0.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -193,7 +193,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -202,9 +202,12 @@
           <section class="tex2jax_ignore mathjax_ignore" id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading">#</a></h1>
 <p>This package provides classes to support file backed arrays or matrices stored in H5 files. We’ll soon provide similar implementations for tiledb, zarr and other matrix storage formats.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">filebackedarray</span> <span class="kn">import</span> <span class="n">H5BackedAssay</span>
+<section id="sparse-matrices">
+<h2>Sparse matrices<a class="headerlink" href="#sparse-matrices" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData</span></code> tries to infer the sparse matrix format, either <code class="docutils literal notranslate"><span class="pre">csr_matrix</span></code> or <code class="docutils literal notranslate"><span class="pre">csc_matrix</span></code> from the h5.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">filebackedarray</span> <span class="kn">import</span> <span class="n">H5BackedSparseData</span>
 
-<span class="n">matrix</span> <span class="o">=</span> <span class="n">H5BackedAssay</span><span class="p">(</span><span class="s2">&quot;tests/data/tenx.sub.h5&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;matrix&quot;</span><span class="p">)</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">H5BackedSparseData</span><span class="p">(</span><span class="s2">&quot;tests/data/tenx.sub.h5&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;matrix&quot;</span><span class="p">)</span>
 
 <span class="c1"># get the dimensions of the matrix</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;matrix shape: &quot;</span><span class="p">,</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -213,6 +216,22 @@
 <span class="n">matrix_slice</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">101</span><span class="p">]</span>
 </pre></div>
 </div>
+</section>
+<section id="dense-matrices">
+<h2>Dense matrices<a class="headerlink" href="#dense-matrices" title="Permalink to this heading">#</a></h2>
+<p>by default the matrix is assumed to be stored in C-style (row-major format). If the h5 file stores the matrix in a column-major format (Fortran-style), you can specify the <code class="docutils literal notranslate"><span class="pre">order=&quot;F&quot;</span></code> parameter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">filebackedarray</span> <span class="kn">import</span> <span class="n">H5BackedDenseData</span>
+
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">H5BackedDenseData</span><span class="p">(</span><span class="s2">&quot;tests/data/dense.h5&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;dense_C&quot;</span><span class="p">)</span>
+
+<span class="c1"># get the dimensions of the matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;matrix shape: &quot;</span><span class="p">,</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># slice the matrix</span>
+<span class="n">matrix_slice</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
 </section>
 
         </article>
@@ -258,8 +277,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#sparse-matrices">Sparse matrices</a></li>
+<li><a class="reference internal" href="#dense-matrices">Dense matrices</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

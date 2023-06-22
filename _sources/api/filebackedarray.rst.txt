@@ -4,10 +4,18 @@ filebackedarray package
 Submodules
 ----------
 
-filebackedarray.backedH5 module
+filebackedarray.H5Dense module
+------------------------------
+
+.. automodule:: filebackedarray.H5Dense
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+filebackedarray.H5Sparse module
 -------------------------------
 
-.. automodule:: filebackedarray.backedH5
+.. automodule:: filebackedarray.H5Sparse
    :members:
    :undoc-members:
    :show-inheritance:
