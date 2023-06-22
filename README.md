@@ -27,9 +27,9 @@ pip install filebackedarray
 ## Usage
 
 ```python
-from filebackedarray import H5BackedAssay
+from filebackedarray import H5BackedSparseData
 
-matrix = H5BackedAssay("tests/data/tenx.sub.h5", group="matrix")
+matrix = H5BackedSparseData("tests/data/tenx.sub.h5", group="matrix")
 
 # get the dimensions of the matrix
 print("matrix shape: ", matrix.shape)
@@ -38,7 +38,7 @@ print("matrix shape: ", matrix.shape)
 matrix_slice = matrix[0:100, 1:101]
 ```
 
-For more use cases including subset, checkout the [documentation](https://biocpy.github.io/FileBackedArray/)
+Checkout the [documentation](https://biocpy.github.io/FileBackedArray/) for more info.
 
 
 

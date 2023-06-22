@@ -4,6 +4,12 @@ from typing import Optional, Sequence, Union
 import h5py
 from scipy import sparse as sp
 
+
+__author__ = "jkanche"
+__copyright__ = "jkanche"
+__license__ = "MIT"
+
+
 H5DatasetInfo = namedtuple("H5DatasetInfo", ["shape", "dtype", "format"])
 
 
@@ -46,12 +52,14 @@ def infer_h5_dataset(dataset: h5py.Group, verbose: bool = False) -> H5DatasetInf
         print("length of indptr", dataset["indptr"], len(dataset["indptr"]))
         if shape[0] == len(dataset["indptr"]) - 1:
             format = "csr_matrix"
+
+        dtype = dataset["data"].dtype.type
     else:
         # dense
         shape = dataset.shape
         format = "dense"
+        dtype = dataset.dtype.type
 
-    dtype = dataset["data"].dtype.type
     return H5DatasetInfo(shape, dtype, format)
 
 

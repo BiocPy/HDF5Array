@@ -4,9 +4,13 @@ import h5py
 
 from .utils import _check_indices, _slice_h5_sparse, infer_h5_dataset
 
+__author__ = "jkanche"
+__copyright__ = "jkanche"
+__license__ = "MIT"
 
-class H5BackedData:
-    """H5 backed matrix or array store.
+
+class H5BackedSparseData:
+    """H5 backed sparse matrix or array store.
 
     Args:
         path (str): Path to the H5 file.
@@ -23,7 +27,13 @@ class H5BackedData:
         self._h5file = h5py.File(path, mode="r")
         self._dataset = self._h5file[group]
 
+        # TODO: If this gets too complicated, might have to add a
+        # parameter that specifies the matrix format instead of inferring it
+        # from the file.
         self._dataset_info = infer_h5_dataset(self._dataset)
+
+        if self._dataset_info.format not in ["csr_matrix", "csc_matrix"]:
+            raise ValueError("File does not contain a sparse matrix")
 
     @property
     def shape(self) -> Tuple[int, int]:
@@ -83,10 +93,6 @@ class H5BackedData:
             # now slice columns
             mat = mat[rowIndices, :]
             return mat
-        elif self.mat_format == "dense":
-            if colIndices is None:
-                colIndices = slice(0)
-            return self._dataset[rowIndices, colIndices]
         else:
             raise Exception("unknown matrix type in H5.")
 
