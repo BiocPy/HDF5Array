@@ -3,15 +3,18 @@ from typing import Optional, Sequence, Tuple, Union
 import h5py
 import scipy.sparse as sp
 
-from .utils import _check_indices, _slice_h5_sparse, infer_h5_dataset
+from .backedarray import BackedArray
+from .utils.h5utils import _check_indices, _slice_h5_sparse, infer_h5_dataset
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
 __license__ = "MIT"
 
 
-class H5BackedSparseData:
-    """H5 backed sparse matrix or array store.
+class H5SparseArray(BackedArray):
+    """H5 backed sparse array or matrices.
+
+    Currently tested for 2-dimensional sparse matrices, if n > 2, use with caution.
 
     Args:
         path (str): Path to the H5 file.
@@ -40,7 +43,7 @@ class H5BackedSparseData:
     def shape(self) -> Tuple[int, int]:
         """Get shape of the dataset.
 
-        Returns:
+        Returns:``
             Tuple[int, int]: number of rows by columns.
         """
         return self._dataset_info.shape

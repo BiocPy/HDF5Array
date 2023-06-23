@@ -1,41 +1,42 @@
-from typing import Optional, Sequence, Tuple, Union
+from typing import Literal, Optional, Sequence, Tuple, Union
 
 import h5py
 import numpy as np
 
-from .utils import _check_indices, infer_h5_dataset
+from .backedarray import BackedArray
+from .utils.h5utils import _check_indices, infer_dataset
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
 __license__ = "MIT"
 
+ORDER_OPTS = ["C", "F"]
 
-class H5BackedDenseData:
-    """H5 backed dense matrix or array store.
+
+class H5DenseArray(BackedArray):
+    """H5 backed dense array or matrices.
+
+    Currently tested for 2-dimensional matrices, if n > 2, use with caution.
 
     Args:
         path (str): Path to the H5 file.
         group (str): Group inside the file that contains the matrix or array.
-        order (str): dense matrix representation, ‘C’, ‘F’,
+        order (Literal["C", "F"]): dense matrix representation, ‘C’, ‘F’,
             row-major (C-style) or column-major (Fortran-style) order.
     """
 
-    def __init__(self, path: str, group: str, order: str = "C") -> None:
-        """Initialize a H5 Backed array.
+    def __init__(self, path: str, group: str, order: Literal["C", "F"] = "C") -> None:
+        """Initialize a H5 Backed array."""
+        super().__init__()
 
-        Args:
-            path (str): Path to the H5 file.
-            group (str): Group inside the file that contains the matrix or array.
-            order (str): dense matrix representation, ‘C’, ‘F’,
-                row-major (C-style) or column-major (Fortran-style) order.
-        """
         self._h5file = h5py.File(path, mode="r")
         self._dataset = self._h5file[group]
-        self._dataset_info = infer_h5_dataset(self._dataset)
+        self._dataset_info = infer_dataset(self._dataset)
 
-        if order not in ("C", "F"):
+        if order not in ORDER_OPTS:
             raise ValueError(
-                "order must be C (c-style, row-major) or F (fortran-style, column-major)"
+                "order must be `C` (c-style, row-major) or "
+                "`F` (fortran-style, column-major)"
             )
 
         self._order = order
@@ -44,16 +45,47 @@ class H5BackedDenseData:
             raise ValueError("File does not contain a dense matrix")
 
     @property
+    def order(self) -> Literal["C", "F"]:
+        """Get order of the dense matrix.
+
+        row-major (C-style) or column-major (Fortran-style) order.
+
+        Returns:
+            Literal["C", "F"]: either ‘C’, ‘F’.
+        """
+        return self._order
+
+    @property
+    def mat_format(self) -> Literal["C", "F"]:
+        """Get the dense matrix format.
+
+        either row-major (C-style) or column-major (Fortran-style) order.
+
+         Returns:
+            Literal["C", "F"]: either ‘C’, ‘F’.
+        """
+        return self._order
+
+    @property
     def shape(self) -> Tuple[int, int]:
         """Get shape of the dataset.
 
         Returns:
             Tuple[int, int]: number of rows by columns.
         """
-        if self._order == "C":
-            return self._dataset_info.shape
+        _shape = None
+
+        if self.order == "C":
+            _shape = self._dataset_info.shape
         else:
-            return self._dataset_info.shape[::-1]
+            _shape = self._dataset_info.shape[::-1]
+
+        # technically if the orientation is F and transposed is True,
+        # this is C but watever
+        if self.transposed:
+            return _shape[::-1]
+
+        return _shape
 
     @property
     def dtype(self) -> str:
@@ -64,23 +96,25 @@ class H5BackedDenseData:
         """
         return self._dataset_info.dtype
 
-    @property
-    def mat_format(self) -> str:
-        """Get dense matrix format.
-
-        either row-major (C-style) or column-major (Fortran-style) order.
-
-         Returns:
-             str: matrix format.
-        """
-        return self._order
-
     def __getitem__(
         self,
         args: Tuple[Union[slice, Sequence[int]], Optional[Union[slice, Sequence[int]]]],
     ) -> np.ndarray:
+        """Get the slice from the H5 file.
+
+        Args:
+            args (Tuple[Union[slice, Sequence[int]], ...]):
+                slices along each dimension.
+
+        Raises:
+            ValueError: if enough slices are not provided
+            ValueError: provided too many slices
+
+        Returns:
+            np.ndarray: numpy ndarray of the slice.
+        """
         if len(args) == 0:
-            raise ValueError("Arguments must contain one slice")
+            raise ValueError("Arguments must contain atleast one slice")
 
         rowIndices = _check_indices(args[0])
         colIndices = None

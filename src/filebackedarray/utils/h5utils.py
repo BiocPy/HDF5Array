@@ -12,12 +12,15 @@ __license__ = "MIT"
 H5DatasetInfo = namedtuple("H5DatasetInfo", ["shape", "dtype", "format"])
 
 
-def infer_h5_dataset(dataset: h5py.Group, verbose: bool = False) -> H5DatasetInfo:
+def infer_dataset(
+    dataset: Union[h5py.Group, h5py.Dataset], verbose: bool = False
+) -> H5DatasetInfo:
     """Infer type of matrix stored in H5 file.
 
     Args:
-        dataset (h5py.Dataset): h5 dataset object to infer matrix.
-        verbose (bool, optional): print info as we read the h5 file? Defaults to False.
+        dataset (h5py.Group, h5py.Dataset): h5 dataset or group object.
+        verbose (bool, optional): print debugging info as we parse
+            the h5 file? Defaults to False.
 
     Raises:
         Exception: when shape is not present as either
@@ -26,6 +29,13 @@ def infer_h5_dataset(dataset: h5py.Group, verbose: bool = False) -> H5DatasetInf
     Returns:
         H5DatasetInfo: info about the matrix.
     """
+
+    if not (isinstance(dataset, h5py.Dataset) or isinstance(dataset, h5py.Group)):
+        raise TypeError(
+            "dataset must be either a h5py Dataset or Group, "
+            f"provided {type(dataset)}"
+        )
+
     if (
         hasattr(dataset, "keys")
         and len(set(dataset.keys()).intersection(["indptr", "data", "indices"])) == 3
@@ -40,7 +50,7 @@ def infer_h5_dataset(dataset: h5py.Group, verbose: bool = False) -> H5DatasetInf
         elif "shape" in dataset.attrs.keys():
             shape = dataset.attrs["shape"][:]
         else:
-            raise Exception("dataset: shape not found in either attrs")
+            raise Exception("dataset: shape not found in either `attrs` or `keys`")
 
         if verbose:
             print("shape is ", shape)
