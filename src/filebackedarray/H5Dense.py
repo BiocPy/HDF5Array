@@ -136,3 +136,9 @@ class H5DenseArray(BackedArray):
     # TODO: switch to weak refs at some point
     def __del__(self):
         self._h5file.close()
+
+
+class H5BackedDenseData(H5DenseArray):
+    """Alias to :class:`H5DenseArray` for backwards compatibility."""
+
+    pass
