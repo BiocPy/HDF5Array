@@ -15,5 +15,4 @@ except PackageNotFoundError:  # pragma: no cover
 finally:
     del version, PackageNotFoundError
 
-from .H5Sparse import H5BackedSparseData
-from .H5Dense import H5BackedDenseData
+from .Hdf5DenseArraySeed import Hdf5DenseArray, Hdf5DenseArraySeed
