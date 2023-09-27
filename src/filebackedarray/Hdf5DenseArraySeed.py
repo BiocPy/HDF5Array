@@ -21,7 +21,7 @@ class Hdf5DenseArraySeed:
                 Name of the dataset containing the array.
 
             dtype:
-                NumPy type to of the data. Defaults to the HDF5 type on disk;
+                NumPy type of the data. Defaults to the HDF5 type on disk;
                 otherwise, values are transformed to ``dtype`` during extraction.
 
             native_order: 
@@ -104,7 +104,7 @@ def chunk_shape_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Optional[Tuple[Sequence[int]]] = None):
+def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     converted = []
     reextract = None
@@ -171,7 +171,7 @@ class Hdf5DenseArray(DelayedArray):
     """HDF5-backed dataset as a ``DelayedArray`` dense array. This subclass
     allows developers to implement custom methods for HDF5-backed arrays."""
 
-    def __init__(self, path, name, **kwargs):
+    def __init__(self, path: str, name: str, **kwargs):
         """
         To construct a ``Hdf5DenseArray`` from an existing
         :py:class:`~Hdf5DenseArraySeed`, use :py:meth:`~delayedarray.wrap.wrap`
@@ -184,8 +184,9 @@ class Hdf5DenseArray(DelayedArray):
             name:
                 Name of the dataset containing the array.
 
-            native_order: 
-                See the :py:class:`~Hdf5DenseArraySeed` constructor.
+            kwargs:
+                Further arguments to pass to the
+                :py:class:`~Hdf5DenseArraySeed` constructor.
         """
         if isinstance(path, Hdf5DenseArraySeed):
             seed = path
