@@ -3,8 +3,8 @@ from delayedarray import extract_dense_array, chunk_shape, DelayedArray, wrap
 from h5py import File
 from numpy import ndarray, dtype, asfortranarray, ix_
 
-__author__ = "jkanche"
-__copyright__ = "jkanche"
+__author__ = "LTLA"
+__copyright__ = "LTLA"
 __license__ = "MIT"
 
 
