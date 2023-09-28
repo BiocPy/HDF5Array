@@ -1,7 +1,7 @@
 from collections import namedtuple
 from typing import Optional, Sequence, Union
 
-import h5py
+from h5py import Dataset, Group
 from scipy import sparse as sp
 
 __author__ = "jkanche"
@@ -12,7 +12,7 @@ __license__ = "MIT"
 H5DatasetInfo = namedtuple("H5DatasetInfo", ["shape", "dtype", "format"])
 
 
-def infer_h5_dataset(dataset: h5py.Group, verbose: bool = False) -> H5DatasetInfo:
+def infer_h5_dataset(dataset: Dataset, verbose: bool = False) -> H5DatasetInfo:
     """Infer type of matrix stored in H5 file.
 
     Args:
@@ -93,7 +93,7 @@ def _translate_slice(idx: slice) -> slice:
 
 
 def _extract_along_idx(
-    h5: h5py.Group, h5info: H5DatasetInfo, start: int, stop: Optional[int] = None
+    h5: Group, h5info: H5DatasetInfo, start: int, stop: Optional[int] = None
 ) -> sp.spmatrix:
     idx = start
     if stop is not None:
@@ -124,7 +124,7 @@ def _get_mat_class(sparse_format: str):
 
 
 def _slice_h5_sparse(
-    h5: h5py.Group, h5info: H5DatasetInfo, idx: Union[slice, Sequence[int]]
+    h5: Group, h5info: H5DatasetInfo, idx: Union[slice, Sequence[int]]
 ) -> sp.spmatrix:
     idx = _check_indices(idx)
 
