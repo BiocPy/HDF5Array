@@ -17,7 +17,6 @@ pip install filebackedarray
 :maxdepth: 2
 
 Overview <readme>
-Tutorial <tutorial>
 Contributions & Help <contributing>
 License <license>
 Authors <authors>

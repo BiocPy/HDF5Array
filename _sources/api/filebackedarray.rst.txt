@@ -4,26 +4,18 @@ filebackedarray package
 Submodules
 ----------
 
-filebackedarray.H5Dense module
-------------------------------
+filebackedarray.Hdf5CompressedSparseMatrixSeed module
+-----------------------------------------------------
 
-.. automodule:: filebackedarray.H5Dense
+.. automodule:: filebackedarray.Hdf5CompressedSparseMatrixSeed
    :members:
    :undoc-members:
    :show-inheritance:
 
-filebackedarray.H5Sparse module
--------------------------------
+filebackedarray.Hdf5DenseArraySeed module
+-----------------------------------------
 
-.. automodule:: filebackedarray.H5Sparse
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-filebackedarray.utils module
-----------------------------
-
-.. automodule:: filebackedarray.utils
+.. automodule:: filebackedarray.Hdf5DenseArraySeed
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="filebackedarray" href="modules.html" />
 
-    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>filebackedarray package - FileBackedArray 0.0.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>filebackedarray package - FileBackedArray 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">FileBackedArray 0.0.4 documentation</div></a>
+      <a href="../index.html"><div class="brand">FileBackedArray 0.1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <span class="sidebar-brand-text">FileBackedArray 0.0.4 documentation</span>
+  <span class="sidebar-brand-text">FileBackedArray 0.1.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -156,7 +156,6 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributions &amp; Help</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../authors.html">Authors</a></li>
@@ -200,183 +199,256 @@
         </div>
         <article role="main">
           <section id="filebackedarray-package">
-<h1>filebackedarray package<a class="headerlink" href="#filebackedarray-package" title="Permalink to this heading">#</a></h1>
+<h1>filebackedarray package<a class="headerlink" href="#filebackedarray-package" title="Link to this heading">#</a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="module-filebackedarray.H5Dense">
-<span id="filebackedarray-h5dense-module"></span><h2>filebackedarray.H5Dense module<a class="headerlink" href="#module-filebackedarray.H5Dense" title="Permalink to this heading">#</a></h2>
+<section id="module-filebackedarray.Hdf5CompressedSparseMatrixSeed">
+<span id="filebackedarray-hdf5compressedsparsematrixseed-module"></span><h2>filebackedarray.Hdf5CompressedSparseMatrixSeed module<a class="headerlink" href="#module-filebackedarray.Hdf5CompressedSparseMatrixSeed" title="Link to this heading">#</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="filebackedarray.H5Dense.H5BackedDenseData">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filebackedarray.H5Dense.</span></span><span class="sig-name descname"><span class="pre">H5BackedDenseData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/H5Dense.html#H5BackedDenseData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.H5Dense.H5BackedDenseData" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5CompressedSparseMatrixSeed.</span></span><span class="sig-name descname"><span class="pre">Hdf5CompressedSparseMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by_column</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5CompressedSparseMatrixSeed.html#Hdf5CompressedSparseMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://biocpy.github.io/DelayedArray/api/delayedarray.html#delayedarray.DelayedArray.DelayedArray" title="(in DelayedArray v0.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayedArray</span></code></a></p>
+<p>Compressed sparse matrix in a HDF5 file as a <code class="docutils literal notranslate"><span class="pre">DelayedArray</span></code>. This
+subclass allows developers to implement custom methods for HDF5-backed
+sparse matrices.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.by_column">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.by_column" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Whether the matrix is compressed sparse column.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.data_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.data_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 dataset containing the matrix data values.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.group_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.group_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 group containing the matrix contents, or None if
+the matrix is not contained within a single group.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.index_dtype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index_dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><span class="pre">dtype</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.index_dtype" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+NumPy type of the indices in this matrix.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indices_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indices_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 dataset containing the matrix indices.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indptr_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indptr_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indptr_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 dataset containing the matrix pointers.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.path" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Path to the HDF5 file.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5CompressedSparseMatrixSeed.</span></span><span class="sig-name descname"><span class="pre">Hdf5CompressedSparseMatrixSeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indptr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5CompressedSparseMatrixSeed.html#Hdf5CompressedSparseMatrixSeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>H5 backed dense matrix or array store.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Path to the H5 file.</p></li>
-<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Group inside the file that contains the matrix or array.</p></li>
-<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – dense matrix representation, ‘C’, ‘F’,
-row-major (C-style) or column-major (Fortran-style) order.</p></li>
-</ul>
-</dd>
-</dl>
+<p>Compressed sparse matrix stored in a HDF5 file, represented as a
+<code class="docutils literal notranslate"><span class="pre">DelayedArray</span></code> seed. This assumes that there are three datasets; <code class="docutils literal notranslate"><span class="pre">data</span></code>
+containing the data values, <code class="docutils literal notranslate"><span class="pre">indices</span></code> containing the indices, and
+<code class="docutils literal notranslate"><span class="pre">indptr</span></code> containing the pointers to the start of every row/column.</p>
 <dl class="py property">
-<dt class="sig sig-object py" id="filebackedarray.H5Dense.H5BackedDenseData.dtype">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.H5Dense.H5BackedDenseData.dtype" title="Permalink to this definition">#</a></dt>
-<dd><p>Get type of values stored in the dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>type of dataset, e.g. int8, float etc.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.by_column">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">by_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.by_column" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Whether the matrix is compressed sparse column.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="filebackedarray.H5Dense.H5BackedDenseData.mat_format">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mat_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.H5Dense.H5BackedDenseData.mat_format" title="Permalink to this definition">#</a></dt>
-<dd><p>Get dense matrix format.</p>
-<p>either row-major (C-style) or column-major (Fortran-style) order.</p>
-<blockquote>
-<div><dl class="simple">
-<dt>Returns:</dt><dd><p>str: matrix format.</p>
-</dd>
-</dl>
-</div></blockquote>
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.data_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.data_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 dataset containing the matrix data values.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="filebackedarray.H5Dense.H5BackedDenseData.shape">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Tuple" title="(in Python v3.9)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#filebackedarray.H5Dense.H5BackedDenseData.shape" title="Permalink to this definition">#</a></dt>
-<dd><p>Get shape of the dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>number of rows by columns.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tuple[<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)">int</a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)">int</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-filebackedarray.H5Sparse">
-<span id="filebackedarray-h5sparse-module"></span><h2>filebackedarray.H5Sparse module<a class="headerlink" href="#module-filebackedarray.H5Sparse" title="Permalink to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="filebackedarray.H5Sparse.H5BackedSparseData">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filebackedarray.H5Sparse.</span></span><span class="sig-name descname"><span class="pre">H5BackedSparseData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/H5Sparse.html#H5BackedSparseData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.H5Sparse.H5BackedSparseData" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>H5 backed sparse matrix or array store.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Path to the H5 file.</p></li>
-<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Group inside the file that contains the matrix or array.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="filebackedarray.H5Sparse.H5BackedSparseData.dtype">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.H5Sparse.H5BackedSparseData.dtype" title="Permalink to this definition">#</a></dt>
-<dd><p>Get type of values stored in the dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>type of dataset, e.g. int8, float etc.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.dtype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><span class="pre">dtype</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.dtype" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+NumPy type of this matrix.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="filebackedarray.H5Sparse.H5BackedSparseData.mat_format">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mat_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.H5Sparse.H5BackedSparseData.mat_format" title="Permalink to this definition">#</a></dt>
-<dd><p>Get matrix format of the dataset.</p>
-<p>either <cite>csr_matrix</cite>, <cite>csc_matrix</cite> or <cite>dense</cite>.</p>
-<blockquote>
-<div><dl class="simple">
-<dt>Returns:</dt><dd><p>str: matrix format.</p>
-</dd>
-</dl>
-</div></blockquote>
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.group_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.group_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 group containing the matrix contents, or None if
+the matrix is not contained within a single group.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="filebackedarray.H5Sparse.H5BackedSparseData.shape">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Tuple" title="(in Python v3.9)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#filebackedarray.H5Sparse.H5BackedSparseData.shape" title="Permalink to this definition">#</a></dt>
-<dd><p>Get shape of the dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>number of rows by columns.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tuple[<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)">int</a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)">int</a>]</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.index_dtype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index_dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;property</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7f6d790f5bd0&gt;</span></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.index_dtype" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+NumPy type of the indices in this matrix.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indices_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indices_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indices_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 dataset containing the matrix indices.</p>
 </dd></dl>
 
-</section>
-<section id="module-filebackedarray.utils">
-<span id="filebackedarray-utils-module"></span><h2>filebackedarray.utils module<a class="headerlink" href="#module-filebackedarray.utils" title="Permalink to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="filebackedarray.utils.H5DatasetInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filebackedarray.utils.</span></span><span class="sig-name descname"><span class="pre">H5DatasetInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#filebackedarray.utils.H5DatasetInfo" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="filebackedarray.utils.H5DatasetInfo.dtype">
-<span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#filebackedarray.utils.H5DatasetInfo.dtype" title="Permalink to this definition">#</a></dt>
-<dd><p>Alias for field number 1</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indptr_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indptr_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indptr_name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the HDF5 dataset containing the matrix pointers.</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="filebackedarray.utils.H5DatasetInfo.format">
-<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#filebackedarray.utils.H5DatasetInfo.format" title="Permalink to this definition">#</a></dt>
-<dd><p>Alias for field number 2</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.path" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Path to the HDF5 file.</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="filebackedarray.utils.H5DatasetInfo.shape">
-<span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#filebackedarray.utils.H5DatasetInfo.shape" title="Permalink to this definition">#</a></dt>
-<dd><p>Alias for field number 0</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Tuple" title="(in Python v3.9)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.shape" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Tuple containing the dimensions of this matrix.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="filebackedarray.utils.infer_h5_dataset">
-<span class="sig-prename descclassname"><span class="pre">filebackedarray.utils.</span></span><span class="sig-name descname"><span class="pre">infer_h5_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#filebackedarray.utils.H5DatasetInfo" title="filebackedarray.utils.H5DatasetInfo"><span class="pre">H5DatasetInfo</span></a></span></span><a class="reference internal" href="../_modules/filebackedarray/utils.html#infer_h5_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.utils.infer_h5_dataset" title="Permalink to this definition">#</a></dt>
-<dd><p>Infer type of matrix stored in H5 file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>h5py.Dataset</em>) – h5 dataset object to infer matrix.</p></li>
-<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – print info as we read the h5 file? Defaults to False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.9/library/exceptions.html#Exception" title="(in Python v3.9)"><strong>Exception</strong></a> – when shape is not present as either
-    key or an attr (for sparse representations).</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>info about the matrix.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#filebackedarray.utils.H5DatasetInfo" title="filebackedarray.utils.H5DatasetInfo">H5DatasetInfo</a></p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.chunk_shape_Hdf5CompressedSparseMatrixSeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5CompressedSparseMatrixSeed.</span></span><span class="sig-name descname"><span class="pre">chunk_shape_Hdf5CompressedSparseMatrixSeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5CompressedSparseMatrixSeed.html#chunk_shape_Hdf5CompressedSparseMatrixSeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.chunk_shape_Hdf5CompressedSparseMatrixSeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">chunk_shape()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_dense_array_Hdf5CompressedSparseMatrixSeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5CompressedSparseMatrixSeed.</span></span><span class="sig-name descname"><span class="pre">extract_dense_array_Hdf5CompressedSparseMatrixSeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5CompressedSparseMatrixSeed.html#extract_dense_array_Hdf5CompressedSparseMatrixSeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_dense_array_Hdf5CompressedSparseMatrixSeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">extract_dense_array()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_sparse_array_Hdf5CompressedSparseMatrixSeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5CompressedSparseMatrixSeed.</span></span><span class="sig-name descname"><span class="pre">extract_sparse_array_Hdf5CompressedSparseMatrixSeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5CompressedSparseMatrixSeed.html#extract_sparse_array_Hdf5CompressedSparseMatrixSeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_sparse_array_Hdf5CompressedSparseMatrixSeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">extract_sparse_array()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.is_sparse_Hdf5CompressedSparseMatrixSeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5CompressedSparseMatrixSeed.</span></span><span class="sig-name descname"><span class="pre">is_sparse_Hdf5CompressedSparseMatrixSeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5CompressedSparseMatrixSeed.html#is_sparse_Hdf5CompressedSparseMatrixSeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.is_sparse_Hdf5CompressedSparseMatrixSeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_sparse()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5CompressedSparseMatrixSeed.wrap_Hdf5CompressedSparseMatrixSeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5CompressedSparseMatrixSeed.</span></span><span class="sig-name descname"><span class="pre">wrap_Hdf5CompressedSparseMatrixSeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5CompressedSparseMatrixSeed.html#wrap_Hdf5CompressedSparseMatrixSeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.wrap_Hdf5CompressedSparseMatrixSeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">wrap()</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="module-filebackedarray.Hdf5DenseArraySeed">
+<span id="filebackedarray-hdf5densearrayseed-module"></span><h2>filebackedarray.Hdf5DenseArraySeed module<a class="headerlink" href="#module-filebackedarray.Hdf5DenseArraySeed" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5DenseArraySeed.</span></span><span class="sig-name descname"><span class="pre">Hdf5DenseArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5DenseArraySeed.html#Hdf5DenseArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://biocpy.github.io/DelayedArray/api/delayedarray.html#delayedarray.DelayedArray.DelayedArray" title="(in DelayedArray v0.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DelayedArray</span></code></a></p>
+<p>HDF5-backed dataset as a <code class="docutils literal notranslate"><span class="pre">DelayedArray</span></code> dense array. This subclass
+allows developers to implement custom methods for HDF5-backed arrays.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the dataset inside the file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.path" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Path to the HDF5 file.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5DenseArraySeed.</span></span><span class="sig-name descname"><span class="pre">Hdf5DenseArraySeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">native_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5DenseArraySeed.html#Hdf5DenseArraySeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>HDF5-backed dataset as a <code class="docutils literal notranslate"><span class="pre">DelayedArray</span></code> dense array seed.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.dtype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><span class="pre">dtype</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.dtype" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+NumPy type of this array.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.name" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Name of the dataset inside the file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.path" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Path to the HDF5 file.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Tuple" title="(in Python v3.9)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.shape" title="Link to this definition">#</a></dt>
+<dd><p>Returns:
+Tuple containing the dimensions of this array.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.chunk_shape_Hdf5DenseArraySeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5DenseArraySeed.</span></span><span class="sig-name descname"><span class="pre">chunk_shape_Hdf5DenseArraySeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5DenseArraySeed.html#chunk_shape_Hdf5DenseArraySeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.chunk_shape_Hdf5DenseArraySeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">chunk_shape()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.extract_dense_array_Hdf5DenseArraySeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5DenseArraySeed.</span></span><span class="sig-name descname"><span class="pre">extract_dense_array_Hdf5DenseArraySeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5DenseArraySeed.html#extract_dense_array_Hdf5DenseArraySeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.extract_dense_array_Hdf5DenseArraySeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">extract_dense_array()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="filebackedarray.Hdf5DenseArraySeed.wrap_Hdf5DenseArraySeed">
+<span class="sig-prename descclassname"><span class="pre">filebackedarray.Hdf5DenseArraySeed.</span></span><span class="sig-name descname"><span class="pre">wrap_Hdf5DenseArraySeed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/filebackedarray/Hdf5DenseArraySeed.html#wrap_Hdf5DenseArraySeed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#filebackedarray.Hdf5DenseArraySeed.wrap_Hdf5DenseArraySeed" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">wrap()</span></code>.</p>
 </dd></dl>
 
 </section>
 <section id="module-filebackedarray">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-filebackedarray" title="Permalink to this heading">#</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-filebackedarray" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -429,32 +501,52 @@ row-major (C-style) or column-major (Fortran-style) order.</p></li>
             <ul>
 <li><a class="reference internal" href="#">filebackedarray package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-filebackedarray.H5Dense">filebackedarray.H5Dense module</a><ul>
-<li><a class="reference internal" href="#filebackedarray.H5Dense.H5BackedDenseData"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData</span></code></a><ul>
-<li><a class="reference internal" href="#filebackedarray.H5Dense.H5BackedDenseData.dtype"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData.dtype</span></code></a></li>
-<li><a class="reference internal" href="#filebackedarray.H5Dense.H5BackedDenseData.mat_format"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData.mat_format</span></code></a></li>
-<li><a class="reference internal" href="#filebackedarray.H5Dense.H5BackedDenseData.shape"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData.shape</span></code></a></li>
+<li><a class="reference internal" href="#module-filebackedarray.Hdf5CompressedSparseMatrixSeed">filebackedarray.Hdf5CompressedSparseMatrixSeed module</a><ul>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix</span></code></a><ul>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.by_column"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.by_column</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.data_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.data_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.group_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.group_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.index_dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.index_dtype</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indices_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.indices_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indptr_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.indptr_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.path"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.path</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed</span></code></a><ul>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.by_column"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.by_column</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.data_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.data_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.dtype</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.group_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.group_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.index_dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.index_dtype</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indices_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.indices_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indptr_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.indptr_name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.path"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.path</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.shape"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.shape</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-filebackedarray.H5Sparse">filebackedarray.H5Sparse module</a><ul>
-<li><a class="reference internal" href="#filebackedarray.H5Sparse.H5BackedSparseData"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData</span></code></a><ul>
-<li><a class="reference internal" href="#filebackedarray.H5Sparse.H5BackedSparseData.dtype"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData.dtype</span></code></a></li>
-<li><a class="reference internal" href="#filebackedarray.H5Sparse.H5BackedSparseData.mat_format"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData.mat_format</span></code></a></li>
-<li><a class="reference internal" href="#filebackedarray.H5Sparse.H5BackedSparseData.shape"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData.shape</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.chunk_shape_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">chunk_shape_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_dense_array_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">extract_dense_array_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_sparse_array_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">extract_sparse_array_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.is_sparse_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">is_sparse_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5CompressedSparseMatrixSeed.wrap_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">wrap_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-filebackedarray.Hdf5DenseArraySeed">filebackedarray.Hdf5DenseArraySeed module</a><ul>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArray</span></code></a><ul>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.name"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArray.name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.path"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArray.path</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-filebackedarray.utils">filebackedarray.utils module</a><ul>
-<li><a class="reference internal" href="#filebackedarray.utils.H5DatasetInfo"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo</span></code></a><ul>
-<li><a class="reference internal" href="#filebackedarray.utils.H5DatasetInfo.dtype"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo.dtype</span></code></a></li>
-<li><a class="reference internal" href="#filebackedarray.utils.H5DatasetInfo.format"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo.format</span></code></a></li>
-<li><a class="reference internal" href="#filebackedarray.utils.H5DatasetInfo.shape"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo.shape</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed</span></code></a><ul>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.dtype</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.name"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.name</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.path"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.path</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.shape"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.shape</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#filebackedarray.utils.infer_h5_dataset"><code class="docutils literal notranslate"><span class="pre">infer_h5_dataset()</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.chunk_shape_Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">chunk_shape_Hdf5DenseArraySeed()</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.extract_dense_array_Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">extract_dense_array_Hdf5DenseArraySeed()</span></code></a></li>
+<li><a class="reference internal" href="#filebackedarray.Hdf5DenseArraySeed.wrap_Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">wrap_Hdf5DenseArraySeed()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-filebackedarray">Module contents</a></li>
@@ -469,9 +561,9 @@ row-major (C-style) or column-major (Fortran-style) order.</p></li>
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+</div><script src="../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

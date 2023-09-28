@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Tutorial" href="tutorial.html" /><link rel="prev" title="FileBackedArray" href="index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Contributing" href="contributing.html" /><link rel="prev" title="FileBackedArray" href="index.html" />
 
-    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>FileBackedArray - FileBackedArray 0.0.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>FileBackedArray - FileBackedArray 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">FileBackedArray 0.0.4 documentation</div></a>
+      <a href="index.html"><div class="brand">FileBackedArray 0.1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">FileBackedArray 0.0.4 documentation</span>
+  <span class="sidebar-brand-text">FileBackedArray 0.1.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -156,7 +156,6 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributions &amp; Help</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
@@ -205,42 +204,109 @@
 [![Built Status](https://api.cirrus-ci.com/github/<USER>/FileBackedArray.svg?branch=main)](https://cirrus-ci.com/github/<USER>/FileBackedArray)
 [![ReadTheDocs](https://readthedocs.org/projects/FileBackedArray/badge/?version=latest)](https://FileBackedArray.readthedocs.io/en/stable/)
 [![Coveralls](https://img.shields.io/coveralls/github/<USER>/FileBackedArray/main.svg)](https://coveralls.io/r/<USER>/FileBackedArray)
-[![PyPI-Server](https://img.shields.io/pypi/v/FileBackedArray.svg)](https://pypi.org/project/FileBackedArray/)
 [![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/FileBackedArray.svg)](https://anaconda.org/conda-forge/FileBackedArray)
-[![Monthly Downloads](https://pepy.tech/badge/FileBackedArray/month)](https://pepy.tech/project/FileBackedArray)
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/FileBackedArray)
 -->
-<p><a class="reference external" href="https://pyscaffold.org/"><img alt="Project generated with PyScaffold" src="https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold" /></a></p>
+<p><a class="reference external" href="https://pyscaffold.org/"><img alt="Project generated with PyScaffold" src="https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold" /></a>
+<a class="reference external" href="https://pypi.org/project/FileBackedArray/"><img alt="PyPI-Server" src="https://img.shields.io/pypi/v/FileBackedArray.svg" /></a>
+<a class="reference external" href="https://pepy.tech/project/FileBackedArray"><img alt="Monthly Downloads" src="https://pepy.tech/badge/FileBackedArray/month" /></a>
+<img alt="Unit tests" src="https://github.com/BiocPy/FileBackedArray/actions/workflows/pypi-test.yml/badge.svg" /></p>
 <section class="tex2jax_ignore mathjax_ignore" id="filebackedarray">
-<h1>FileBackedArray<a class="headerlink" href="#filebackedarray" title="Permalink to this heading">#</a></h1>
-<p>Python package to support file backed arrays and matrices stored in H5 file. Will soon support tiledb and zarr based formats.</p>
-<section id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this heading">#</a></h2>
-<p>Package is published to <a class="reference external" href="https://pypi.org/project/filebackedarray/">PyPI</a></p>
+<h1>FileBackedArray<a class="headerlink" href="#filebackedarray" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>This is the Python equivalent of Bioconductor’s <a class="reference external" href="https://bioconductor.org/packages/HDF5Array"><strong>HDF5Array</strong></a> package,
+providing a representation of HDF5-backed arrays within the <a class="reference external" href="https://github.com/BiocPy/delayedarray"><strong>delayedarray</strong></a> framework.
+The idea is to allow users to store, manipulate and operate on large datasets without loading them into memory,
+in a manner that is trivially compatible with other data structures in the <a class="reference external" href="https::/github.com/BiocPy"><strong>BiocPy</strong></a> ecosystem.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>This package can be installed from <a class="reference external" href="https://pypi.org/project/filebackedarray/">PyPI</a> with the usual commands:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>filebackedarray
 </pre></div>
 </div>
 </section>
-<section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">filebackedarray</span> <span class="kn">import</span> <span class="n">H5BackedSparseData</span>
+<section id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<p>Let’s mock up a dense array:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-<span class="n">matrix</span> <span class="o">=</span> <span class="n">H5BackedSparseData</span><span class="p">(</span><span class="s2">&quot;tests/data/tenx.sub.h5&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;matrix&quot;</span><span class="p">)</span>
-
-<span class="c1"># get the dimensions of the matrix</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;matrix shape: &quot;</span><span class="p">,</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-<span class="c1"># slice the matrix</span>
-<span class="n">matrix_slice</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">101</span><span class="p">]</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;whee.h5&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">handle</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;yay&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Checkout the <a class="reference external" href="https://biocpy.github.io/FileBackedArray/">documentation</a> for more info.</p>
-<!-- pyscaffold-notes -->
+<p>We can now represent it as a <code class="docutils literal notranslate"><span class="pre">Hdf5DenseArray</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">filebackedarray</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">filebackedarray</span><span class="o">.</span><span class="n">Hdf5DenseArray</span><span class="p">(</span><span class="s2">&quot;whee.h5&quot;</span><span class="p">,</span> <span class="s2">&quot;yay&quot;</span><span class="p">,</span> <span class="n">native_order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">## &lt;40 x 50 x 100&gt; Hdf5DenseArray object of type &#39;float64&#39;</span>
+<span class="c1">## [[[0.63008796, 0.34849183, 0.75621679, ..., 0.07343495, 0.63095765,</span>
+<span class="c1">##    0.625732  ],</span>
+<span class="c1">##   [0.68123095, 0.91403054, 0.74737122, ..., 0.17344344, 0.82254404,</span>
+<span class="c1">##    0.58158815],</span>
+<span class="c1">##   [0.83287116, 0.40738123, 0.89887551, ..., 0.34936481, 0.76600276,</span>
+<span class="c1">##    0.91991967],</span>
+<span class="c1">##   ...,</span>
+</pre></div>
+</div>
+<p>This is just a subclass of a <code class="docutils literal notranslate"><span class="pre">DelayedArray</span></code> and can be used anywhere in the BiocPy framework.
+Parts of the NumPy API are also supported - for example, we could apply a variety of delayed operations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scaling</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">transformed</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">arr</span> <span class="o">/</span> <span class="n">scaling</span><span class="p">)</span>
+<span class="c1">## &lt;40 x 50 x 100&gt; DelayedArray object of type &#39;float64&#39;</span>
+<span class="c1">## [[[0.58803887, 0.3458478 , 0.82700531, ..., 0.08224734, 0.65678967,</span>
+<span class="c1">##    0.56893312],</span>
+<span class="c1">##   [0.62348907, 0.7341526 , 0.82040225, ..., 0.18437718, 0.7932422 ,</span>
+<span class="c1">##    0.53784637],</span>
+<span class="c1">##   [0.72176703, 0.39407341, 0.92788307, ..., 0.34205035, 0.75487196,</span>
+<span class="c1">##    0.75456938],</span>
+<span class="c1">##   ...,</span>
+</pre></div>
+</div>
+<p>Check out the <a class="reference external" href="https://biocpy.github.io/FileBackedArray/">documentation</a> for more details.</p>
 </section>
-<section id="note">
-<h2>Note<a class="headerlink" href="#note" title="Permalink to this heading">#</a></h2>
-<p>This project has been set up using PyScaffold 4.5. For details and usage
-information on PyScaffold see <a class="reference external" href="https://pyscaffold.org/">https://pyscaffold.org/</a>.</p>
+<section id="handling-sparse-matrices">
+<h2>Handling sparse matrices<a class="headerlink" href="#handling-sparse-matrices" title="Link to this heading">#</a></h2>
+<p>We support a variety of compressed sparse formats where the non-zero elements are held inside three separate datasets -
+usually <code class="docutils literal notranslate"><span class="pre">data</span></code>, <code class="docutils literal notranslate"><span class="pre">indices</span></code> and <code class="docutils literal notranslate"><span class="pre">indptr</span></code>, based on the <a class="reference external" href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/advanced/h5_matrices">10X Genomics sparse HDF5 format</a>.
+To demonstrate, let’s mock up some sparse data using <strong>scipy</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.sparse</span>
+<span class="n">mock</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;sparse_whee.h5&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">handle</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;sparse_blah/data&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mock</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;gzip&quot;</span><span class="p">)</span>
+    <span class="n">handle</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;sparse_blah/indices&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mock</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;gzip&quot;</span><span class="p">)</span>
+    <span class="n">handle</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;sparse_blah/indptr&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mock</span><span class="o">.</span><span class="n">indptr</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;gzip&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can then create a sparse HDF5-backed matrix.
+Note that there is some variation in this HDF5 compressed sparse format, notably where the dimensions are stored and whether it is column/row-major.
+The constructor will not do any auto-detection so we need to provide this information explicitly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">filebackedarray</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">filebackedarray</span><span class="o">.</span><span class="n">Hdf5CompressedSparseMatrix</span><span class="p">(</span>
+    <span class="s2">&quot;sparse_whee.h5&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;sparse_blah&quot;</span><span class="p">,</span> 
+    <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> 
+    <span class="n">by_column</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="c1">## &lt;100 x 200&gt; sparse Hdf5CompressedSparseMatrix object of type &#39;float64&#39;</span>
+<span class="c1">## [[0.        , 0.        , 0.26563417, ..., 0.        , 0.        ,</span>
+<span class="c1">##   0.        ],</span>
+<span class="c1">##  [0.        , 0.        , 0.        , ..., 0.23896924, 0.        ,</span>
+<span class="c1">##   0.        ],</span>
+<span class="c1">##  [0.        , 0.        , 0.        , ..., 0.42236848, 0.3585153 ,</span>
+<span class="c1">##   0.        ],</span>
+<span class="c1">##  ...,</span>
+<span class="c1">##  [0.        , 0.        , 0.3363087 , ..., 0.        , 0.        ,</span>
+<span class="c1">##   0.        ],</span>
+<span class="c1">##  [0.        , 0.        , 0.        , ..., 0.        , 0.        ,</span>
+<span class="c1">##   0.        ],</span>
+<span class="c1">##  [0.        , 0.        , 0.        , ..., 0.        , 0.        ,</span>
+<span class="c1">##   0.        ]]</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -249,12 +315,12 @@ information on PyScaffold see <a class="reference external" href="https://pyscaf
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="tutorial.html">
+          <a class="next-page" href="contributing.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Tutorial</div>
+                <div class="title">Contributing</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -300,9 +366,10 @@ information on PyScaffold see <a class="reference external" href="https://pyscaf
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">FileBackedArray</a><ul>
-<li><a class="reference internal" href="#install">Install</a></li>
-<li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#note">Note</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li><a class="reference internal" href="#handling-sparse-matrices">Handling sparse matrices</a></li>
 </ul>
 </li>
 </ul>
@@ -314,9 +381,9 @@ information on PyScaffold see <a class="reference external" href="https://pyscaf
       
     </aside>
   </div>
-</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/furo.js"></script>
+</div><script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>

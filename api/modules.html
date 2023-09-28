@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="filebackedarray package" href="filebackedarray.html" /><link rel="prev" title="Changelog" href="../changelog.html" />
 
-    <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>filebackedarray - FileBackedArray 0.0.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>filebackedarray - FileBackedArray 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">FileBackedArray 0.0.4 documentation</div></a>
+      <a href="../index.html"><div class="brand">FileBackedArray 0.1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <span class="sidebar-brand-text">FileBackedArray 0.0.4 documentation</span>
+  <span class="sidebar-brand-text">FileBackedArray 0.1.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -156,7 +156,6 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributions &amp; Help</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../authors.html">Authors</a></li>
@@ -200,37 +199,57 @@
         </div>
         <article role="main">
           <section id="filebackedarray">
-<h1>filebackedarray<a class="headerlink" href="#filebackedarray" title="Permalink to this heading">#</a></h1>
+<h1>filebackedarray<a class="headerlink" href="#filebackedarray" title="Link to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="filebackedarray.html">filebackedarray package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="filebackedarray.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filebackedarray.html#module-filebackedarray.H5Dense">filebackedarray.H5Dense module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Dense.H5BackedDenseData"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Dense.H5BackedDenseData.dtype"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData.dtype</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Dense.H5BackedDenseData.mat_format"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData.mat_format</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Dense.H5BackedDenseData.shape"><code class="docutils literal notranslate"><span class="pre">H5BackedDenseData.shape</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="filebackedarray.html#module-filebackedarray.Hdf5CompressedSparseMatrixSeed">filebackedarray.Hdf5CompressedSparseMatrixSeed module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.by_column"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.by_column</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.data_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.data_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.group_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.group_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.index_dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.index_dtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indices_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.indices_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.indptr_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.indptr_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix.path"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrix.path</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.by_column"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.by_column</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.data_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.data_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.dtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.group_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.group_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.index_dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.index_dtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indices_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.indices_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.indptr_name"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.indptr_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.path"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed.shape"><code class="docutils literal notranslate"><span class="pre">Hdf5CompressedSparseMatrixSeed.shape</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="filebackedarray.html#module-filebackedarray.H5Sparse">filebackedarray.H5Sparse module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Sparse.H5BackedSparseData"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Sparse.H5BackedSparseData.dtype"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData.dtype</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Sparse.H5BackedSparseData.mat_format"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData.mat_format</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.H5Sparse.H5BackedSparseData.shape"><code class="docutils literal notranslate"><span class="pre">H5BackedSparseData.shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.chunk_shape_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">chunk_shape_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_dense_array_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">extract_dense_array_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_sparse_array_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">extract_sparse_array_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.is_sparse_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">is_sparse_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.wrap_Hdf5CompressedSparseMatrixSeed"><code class="docutils literal notranslate"><span class="pre">wrap_Hdf5CompressedSparseMatrixSeed()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="filebackedarray.html#module-filebackedarray.Hdf5DenseArraySeed">filebackedarray.Hdf5DenseArraySeed module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.name"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArray.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArray.path"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArray.path</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="filebackedarray.html#module-filebackedarray.utils">filebackedarray.utils module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.utils.H5DatasetInfo"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.utils.H5DatasetInfo.dtype"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo.dtype</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.utils.H5DatasetInfo.format"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo.format</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.utils.H5DatasetInfo.shape"><code class="docutils literal notranslate"><span class="pre">H5DatasetInfo.shape</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.dtype"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.dtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.name"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.path"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.Hdf5DenseArraySeed.shape"><code class="docutils literal notranslate"><span class="pre">Hdf5DenseArraySeed.shape</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.utils.infer_h5_dataset"><code class="docutils literal notranslate"><span class="pre">infer_h5_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.chunk_shape_Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">chunk_shape_Hdf5DenseArraySeed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.extract_dense_array_Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">extract_dense_array_Hdf5DenseArraySeed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="filebackedarray.html#filebackedarray.Hdf5DenseArraySeed.wrap_Hdf5DenseArraySeed"><code class="docutils literal notranslate"><span class="pre">wrap_Hdf5DenseArraySeed()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="filebackedarray.html#module-filebackedarray">Module contents</a></li>
@@ -289,9 +308,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
+</div><script src="../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>
