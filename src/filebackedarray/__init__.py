@@ -16,3 +16,4 @@ finally:
     del version, PackageNotFoundError
 
 from .Hdf5DenseArraySeed import Hdf5DenseArray, Hdf5DenseArraySeed
+from .Hdf5CompressedSparseMatrixSeed import Hdf5CompressedSparseMatrix, Hdf5CompressedSparseMatrixSeed

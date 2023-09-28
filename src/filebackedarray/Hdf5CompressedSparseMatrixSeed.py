@@ -1,7 +1,7 @@
-from typing import Optional, Sequence, Tuple, Union
+from typing import Optional, Sequence, Tuple, Callable
 from delayedarray import extract_dense_array, extract_sparse_array, chunk_shape, DelayedArray, wrap, is_sparse, SparseNdarray
 from h5py import File
-from numpy import ndarray, dtype, asfortranarray, ix_, integer, zeros
+from numpy import ndarray, dtype, asfortranarray, ix_, integer, zeros, issubdtype
 from bisect import bisect_left
 
 __author__ = "LTLA"
@@ -9,7 +9,7 @@ __copyright__ = "LTLA"
 __license__ = "MIT"
 
 
-class Hdf5SparseMatrixSeed:
+class Hdf5CompressedSparseMatrixSeed:
     """Compressed sparse matrix stored in a HDF5 file, represented as a
     ``DelayedArray`` seed. This assumes that there are three datasets; ``data``
     containing the data values, ``indices`` containing the indices, and
@@ -110,6 +110,8 @@ class Hdf5SparseMatrixSeed:
             idset = handle[self._indices_name]
             if len(idset.shape) != 1 or idset.shape[0] != self._indptr[-1]:
                 raise ValueError("'indices' dataset should have length equal to the number of non-zero elements")
+            if not issubdtype(idset.dtype, integer):
+                raise ValueError("'indices' dataset should contain integers")
             self._modify_index_dtype = (index_dtype is not None and index_dtype != idset.dtype)
             if not self._modify_index_dtype:
                 index_dtype = idset.dtype
@@ -190,13 +192,13 @@ class Hdf5SparseMatrixSeed:
 
 
 @is_sparse.register
-def is_sparse_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
+def is_sparse_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
     """See :py:meth:`~delayedarray.is_sparse.is_sparse`."""
     return True
 
 
 @chunk_shape.register
-def chunk_shape_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
+def chunk_shape_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
     """See :py:meth:`~delayedarray.chunk_shape.chunk_shape`."""
     if x._by_column:
         return (x._shape[0], 1)
@@ -205,7 +207,7 @@ def chunk_shape_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
 
 
 def _extract_array(
-    x: Hdf5SparseArraySeed, 
+    x: Hdf5CompressedSparseMatrixSeed, 
     primary_sub: Sequence[int], 
     secondary_sub: Sequence[int], 
     secondary_len: int, 
@@ -256,12 +258,12 @@ def _extract_array(
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5SparseArraySeed(x: Hdf5SparseArraySeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
+def extract_dense_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     if subset is None:
         subset = (range(x.shape[0]), range(x.shape[1]))
 
-    output = zeros(x.shape, dtype=x.dtype, order="F")
+    output = zeros((len(subset[0]), len(subset[1])), dtype=x.dtype, order="F")
 
     if x._by_column: 
         primary_sub = subset[1]
@@ -295,7 +297,7 @@ def extract_dense_array_Hdf5SparseArraySeed(x: Hdf5SparseArraySeed, subset: Opti
 
 
 @extract_sparse_array.register
-def extract_sparse_array_Hdf5SparseArraySeed(x: Hdf5SparseArraySeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
+def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
     """See :py:meth:`~delayedarray.extract_sparse_array.extract_sparse_array`."""
     if subset is None:
         subset = (range(x.shape[0]), range(x.shape[1]))
