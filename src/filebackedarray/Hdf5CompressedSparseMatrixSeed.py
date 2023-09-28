@@ -1,7 +1,7 @@
 from typing import Optional, Sequence, Tuple, Callable
 from delayedarray import extract_dense_array, extract_sparse_array, chunk_shape, DelayedArray, wrap, is_sparse, SparseNdarray
 from h5py import File
-from numpy import ndarray, dtype, asfortranarray, ix_, integer, zeros, issubdtype
+from numpy import ndarray, dtype, integer, zeros, issubdtype, array
 from bisect import bisect_left
 
 __author__ = "LTLA"
@@ -188,7 +188,7 @@ class Hdf5CompressedSparseMatrixSeed:
         Returns:
             Name of the HDF5 dataset containing the matrix pointers.
         """
-        return self._indices_name
+        return self._indptr_name
 
 
 @is_sparse.register
@@ -314,7 +314,7 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseM
         secondary_len = x.shape[1]
 
     output = []
-    for i in range(primary_len):
+    for i in range(len(subset[1])):
         output.append(([], []))
 
     if x._by_column: 
@@ -325,12 +325,12 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseM
             output[c] = (rows, values)
     else:
         def _individual(r, c, value):
-            output[r][0].append(c)
-            output[r][1].append(value)
+            output[c][0].append(r)
+            output[c][1].append(value)
         def _consecutive(r, cols, values):
             for j, c in enumerate(cols):
-                output[r][0].append(c)
-                output[r][1].append(values[j])
+                output[c][0].append(r)
+                output[c][1].append(values[j])
 
     _extract_array(
         x=x, 
@@ -346,16 +346,18 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseM
         if len(con[0]) ==  0:
             output[i] = None
         else:
-            output[i] = (rows.astype(x._index_type, copy=False), values.astype(x._dtype, copy=False))
+            output[i] = (array(con[0], dtype=x._index_dtype, copy=False), array(con[1], dtype=x._dtype, copy=False))
             all_none = False
     if all_none:
         output = None
 
+    print(output)
     return SparseNdarray(
         shape=(len(subset[0]), len(subset[1])), 
         contents=output, 
         dtype=x._dtype, 
-        index_dtype=x._index_dtype
+        index_dtype=x._index_dtype,
+        check=False,
     )
 
 
@@ -449,7 +451,7 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
         Returns:
             Name of the HDF5 dataset containing the matrix pointers.
         """
-        return self.seed.indices_name
+        return self.seed.indptr_name
 
 
 @wrap.register

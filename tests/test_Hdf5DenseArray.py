@@ -31,12 +31,17 @@ def test_Hdf5DenseArray_native():
 
     # Check that the slicing works as expected.
     slices = (slice(3, 90, 3), slice(4, 160, 5))
+    ref = y[slices]
     ranges = [range(*s.indices(test_shape[i])) for i, s in enumerate(slices)]
-    assert (delayedarray.extract_dense_array(arr, (*ranges,)) == y[slices]).all()
+    assert (delayedarray.extract_dense_array(arr, (*ranges,)) == ref).all()
 
     # Check that it works with explicit lists.
     ranges2 = [list(r) for r in ranges]
-    assert (delayedarray.extract_dense_array(arr, (*ranges2,)) == y[slices]).all()
+    assert (delayedarray.extract_dense_array(arr, (*ranges2,)) == ref).all()
+
+    # Check that it works with a mix of both.
+    mixed = (ranges[0], slices[1])
+    assert (delayedarray.extract_dense_array(arr, (*mixed,)) == ref).all()
 
 
 def test_Hdf5DenseArray_non_native():
@@ -55,12 +60,17 @@ def test_Hdf5DenseArray_non_native():
 
     # Check that the slicing works as expected.
     slices = (slice(100, 180), slice(50, 100))
+    ref = y.T[slices]
     ranges = [range(*s.indices(actual_shape[i])) for i, s in enumerate(slices)]
-    assert (delayedarray.extract_dense_array(arr, (*ranges,)) == y.T[slices]).all()
+    assert (delayedarray.extract_dense_array(arr, (*ranges,)) == ref).all()
 
     # Check that it works with explicit lists.
     ranges2 = [list(r) for r in ranges]
-    assert (delayedarray.extract_dense_array(arr, (*ranges2,)) == y.T[slices]).all()
+    assert (delayedarray.extract_dense_array(arr, (*ranges2,)) == ref).all()
+
+    # Check that it works with a mix of both.
+    mixed = (slices[0], ranges[1])
+    assert (delayedarray.extract_dense_array(arr, (*mixed,)) == ref).all()
 
 
 def test_Hdf5DenseArray_new_type():
@@ -74,3 +84,14 @@ def test_Hdf5DenseArray_new_type():
     assert arr.dtype == numpy.dtype("int32")
     assert delayedarray.chunk_shape(arr) == chunk_sizes
     assert (delayedarray.extract_dense_array(arr) == y.astype(numpy.int32)).all()
+
+
+def test_Hdf5DenseArray_properties():
+    test_shape = (100, 200)
+    y = numpy.random.rand(*test_shape) * 10
+    chunk_sizes = (10, 20)
+    path, name = _mockup(y, chunk_sizes, 'gzip')
+    arr = Hdf5DenseArray(path, name, dtype=numpy.dtype("int32"), native_order=True)
+
+    assert arr.path == path
+    assert arr.name == name
