@@ -457,4 +457,4 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
 @wrap.register
 def wrap_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
     """See :py:meth:`~delayedarray.wrap.wrap`."""
-    return Hdf5CompressedSparseMatrix(x)
+    return Hdf5CompressedSparseMatrix(x, None, None, None)

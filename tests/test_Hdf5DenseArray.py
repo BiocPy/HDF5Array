@@ -95,3 +95,6 @@ def test_Hdf5DenseArray_properties():
 
     assert arr.path == path
     assert arr.name == name
+
+    rewrap = delayedarray.wrap(arr.seed)
+    assert isinstance(rewrap, Hdf5DenseArray)

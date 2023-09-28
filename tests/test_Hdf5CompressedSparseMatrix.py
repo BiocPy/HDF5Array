@@ -118,3 +118,6 @@ def test_Hdf5CompressedSparseMatrix_properties():
     assert arr.data_name == group + "/data"
     assert arr.indices_name == group + "/indices"
     assert arr.indptr_name == group + "/indptr"
+
+    rewrap = delayedarray.wrap(arr.seed)
+    assert isinstance(rewrap, Hdf5CompressedSparseMatrix)

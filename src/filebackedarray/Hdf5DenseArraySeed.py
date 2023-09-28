@@ -214,4 +214,4 @@ class Hdf5DenseArray(DelayedArray):
 @wrap.register
 def wrap_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
     """See :py:meth:`~delayedarray.wrap.wrap`."""
-    return Hdf5DenseArray(x)
+    return Hdf5DenseArray(x, None)
