@@ -217,10 +217,10 @@ def _extract_array(
     if len(secondary_sub) == 0:
         return
     secondary_start = secondary_sub[0]
-    search_start = secondary_start > 0
     secondary_end = secondary_sub[-1] + 1
+    is_consecutive = (secondary_end - secondary_start == len(secondary_sub))
+    search_start = secondary_start > 0
     search_end = secondary_end < secondary_len
-    is_consecutive = (search_end - search_start == len(secondary_sub))
 
     with File(x._path, "r") as handle:
         data = handle[x._data_name]
@@ -351,7 +351,6 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseM
     if all_none:
         output = None
 
-    print(output)
     return SparseNdarray(
         shape=(len(subset[0]), len(subset[1])), 
         contents=output, 
