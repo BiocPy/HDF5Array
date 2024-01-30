@@ -27,7 +27,8 @@ def test_Hdf5DenseArray_native():
     assert arr.shape == y.shape
     assert arr.dtype == y.dtype
     assert delayedarray.chunk_shape(arr) == chunk_sizes
-    assert (delayedarray.extract_dense_array(arr) == y).all()
+    assert (delayedarray.to_dense_array(arr) == y).all()
+    assert not delayedarray.is_masked(arr)
 
     # Check that the slicing works as expected.
     slices = (slice(3, 90, 3), slice(4, 160, 5))
@@ -56,7 +57,7 @@ def test_Hdf5DenseArray_non_native():
     assert arr.shape == actual_shape
     assert arr.dtype == y.dtype
     assert delayedarray.chunk_shape(arr) == actual_chunk_sizes
-    assert (delayedarray.extract_dense_array(arr) == y.T).all()
+    assert (delayedarray.to_dense_array(arr) == y.T).all()
 
     # Check that the slicing works as expected.
     slices = (slice(100, 180), slice(50, 100))
@@ -83,7 +84,7 @@ def test_Hdf5DenseArray_new_type():
     assert arr.shape == test_shape
     assert arr.dtype == numpy.dtype("int32")
     assert delayedarray.chunk_shape(arr) == chunk_sizes
-    assert (delayedarray.extract_dense_array(arr) == y.astype(numpy.int32)).all()
+    assert (delayedarray.to_dense_array(arr) == y.astype(numpy.int32)).all()
 
 
 def test_Hdf5DenseArray_properties():

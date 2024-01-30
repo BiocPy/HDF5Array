@@ -1,6 +1,7 @@
 from typing import Optional, Sequence, Tuple, Callable
-from delayedarray import extract_dense_array, extract_sparse_array, chunk_shape, DelayedArray, wrap, is_sparse, SparseNdarray
+from delayedarray import extract_dense_array, extract_sparse_array, chunk_shape, DelayedArray, wrap, is_sparse, SparseNdarray, is_masked
 from h5py import File
+import numpy
 from numpy import ndarray, dtype, integer, zeros, issubdtype, array
 from bisect import bisect_left
 
@@ -258,11 +259,8 @@ def _extract_array(
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
+def extract_dense_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]) -> numpy.ndarray:
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
-    if subset is None:
-        subset = (range(x.shape[0]), range(x.shape[1]))
-
     output = zeros((len(subset[0]), len(subset[1])), dtype=x.dtype, order="F")
 
     if x._by_column: 
@@ -297,11 +295,8 @@ def extract_dense_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMa
 
 
 @extract_sparse_array.register
-def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
+def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]) -> SparseNdarray:
     """See :py:meth:`~delayedarray.extract_sparse_array.extract_sparse_array`."""
-    if subset is None:
-        subset = (range(x.shape[0]), range(x.shape[1]))
-
     if x._by_column: 
         primary_sub = subset[1]
         secondary_sub = subset[0]
@@ -457,3 +452,9 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
 def wrap_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
     """See :py:meth:`~delayedarray.wrap.wrap`."""
     return Hdf5CompressedSparseMatrix(x, None, None, None)
+
+
+@is_masked.register
+def is_masked_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed) -> bool:
+    """See :py:meth:`~delayedarray.is_masked.is_masked`."""
+    return False

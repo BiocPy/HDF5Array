@@ -1,6 +1,7 @@
 from typing import Optional, Sequence, Tuple, Union
-from delayedarray import extract_dense_array, chunk_shape, DelayedArray, wrap
+from delayedarray import extract_dense_array, chunk_shape, DelayedArray, wrap, is_masked
 from h5py import File
+import numpy
 from numpy import ndarray, dtype, asfortranarray, ix_
 
 __author__ = "LTLA"
@@ -104,47 +105,41 @@ def chunk_shape_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Optional[Tuple[Sequence[int], ...]] = None):
+def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Tuple[Sequence[int], ...]) -> numpy.ndarray:
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     converted = []
+    num_lists = 0
+    for s in subset:
+        if isinstance(s, range): # convert back to slice for HDF5 access efficiency.
+            converted.append(slice(s.start, s.stop, s.step))
+        else:
+            num_lists += 1
+            converted.append(s)
+
+    # Currently h5py doesn't support indexing with multiple lists at once.
+    # So let's convert all but one of the highest-density entries to slices.
     reextract = None
+    if num_lists > 1:
+        lowest_density = 1
+        chosen = 0
+        for i, s in enumerate(converted):
+            if not isinstance(s, slice) and len(s):
+                lowest = s[1]
+                highest = s[-1]
+                current_density = (highest - lowest) / len(s)
+                if lowest_density > current_density:
+                    lowest_density = current_density
+                    chosen = i
 
-    if subset is None:
-        for s in x._shape:
-            converted.append(slice(s))
-    else:
-        num_lists = 0
-        for s in subset:
-            if isinstance(s, range): # convert back to slice for HDF5 access efficiency.
-                converted.append(slice(s.start, s.stop, s.step))
+        reextract = []
+        for i, s in enumerate(converted):
+            if isinstance(s, slice) or i == chosen:
+                reextract.append(range(len(subset[i])))
             else:
-                num_lists += 1
-                converted.append(s)
-
-        # Currently h5py doesn't support indexing with multiple lists at once.
-        # So let's convert all but one of the highest-density entries to
-        # slices, 
-        if num_lists > 1:
-            lowest_density = 1
-            chosen = 0
-            for i, s in enumerate(converted):
-                if not isinstance(s, slice) and len(s):
-                    lowest = s[1]
-                    highest = s[-1]
-                    current_density = (highest - lowest) / len(s)
-                    if lowest_density > current_density:
-                        lowest_density = current_density
-                        chosen = i
-
-            reextract = []
-            for i, s in enumerate(converted):
-                if isinstance(s, slice) or i == chosen:
-                    reextract.append(range(len(subset[i])))
-                else:
-                    lowest = s[0]
-                    highest = s[-1]
-                    converted[i] = slice(lowest, highest + 1)
-                    reextract.append([j - lowest for j in s])
+                lowest = s[0]
+                highest = s[-1]
+                converted[i] = slice(lowest, highest + 1)
+                reextract.append([j - lowest for j in s])
 
     # Re-opening the handle as needed, so as to avoid
     # blocking other applications that need this file.
@@ -215,3 +210,9 @@ class Hdf5DenseArray(DelayedArray):
 def wrap_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
     """See :py:meth:`~delayedarray.wrap.wrap`."""
     return Hdf5DenseArray(x, None)
+
+
+@is_masked.register
+def is_masked_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed) -> bool:
+    """See :py:meth:`~delayedarray.is_masked.is_masked`."""
+    return False

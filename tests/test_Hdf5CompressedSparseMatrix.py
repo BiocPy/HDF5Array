@@ -31,7 +31,8 @@ def test_Hdf5CompressedSparseMatrix_column():
     assert arr.shape == shape
     assert arr.dtype == y.dtype
     assert delayedarray.chunk_shape(arr) == (100, 1)
-    assert (delayedarray.extract_dense_array(arr) == y.toarray()).all()
+    assert (delayedarray.to_dense_array(arr) == y.toarray()).all()
+    assert not delayedarray.is_masked(arr)
 
     # Check that consecutive slicing works as expected.
     slices = (slice(30, 90), slice(20, 60))
@@ -63,7 +64,7 @@ def test_Hdf5CompressedSparseMatrix_row():
     assert arr.shape == shape 
     assert arr.dtype == y.dtype
     assert delayedarray.chunk_shape(arr) == (1, 200)
-    assert (delayedarray.extract_dense_array(arr) == y.toarray()).all()
+    assert (delayedarray.to_dense_array(arr) == y.toarray()).all()
 
     # Check that consecutive slicing works as expected.
     slices = (slice(10, 80), slice(50, 150))
@@ -96,11 +97,11 @@ def test_Hdf5CompressedSparseMatrix_dtype():
     assert arr.dtype == numpy.int16
     assert delayedarray.chunk_shape(arr) == (55, 1)
 
-    as_dense = delayedarray.extract_dense_array(arr)
+    as_dense = delayedarray.to_dense_array(arr)
     assert (as_dense == y.toarray()).all()
     assert as_dense.dtype == numpy.int16
 
-    as_sparse = delayedarray.extract_sparse_array(arr)
+    as_sparse = delayedarray.to_sparse_array(arr)
     assert (numpy.array(as_sparse) == y.toarray()).all()
     assert as_sparse.dtype == numpy.int16
     assert as_sparse.index_dtype == numpy.uint8
