@@ -5,10 +5,10 @@ Python package to support file backed arrays and matrices stored in H5 file. Wil
 
 ## Install
 
-Package is published to [PyPI](https://pypi.org/project/filebackedarray/)
+Package is published to [PyPI](https://pypi.org/project/hdf5array/)
 
 ```shell
-pip install filebackedarray
+pip install hdf5array
 ```
 
 ## Contents
