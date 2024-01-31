@@ -34,7 +34,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/filebackedarray")
+module_dir = os.path.join(__location__, "../src/hdf5array")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -79,22 +79,25 @@ extensions = [
 templates_path = ["_templates"]
 
 
-# Enable markdown
-extensions.append("myst_parser")
+# Configure AutoStructify
+# https://recommonmark.readthedocs.io/en/latest/auto_structify.html
+def setup(app):
+    from recommonmark.transform import AutoStructify
 
-# Configure MyST-Parser
-myst_enable_extensions = [
-    "amsmath",
-    "colon_fence",
-    "deflist",
-    "dollarmath",
-    "html_image",
-    "linkify",
-    "replacements",
-    "smartquotes",
-    "substitution",
-    "tasklist",
-]
+    params = {
+        "enable_auto_toc_tree": True,
+        "auto_toc_tree_section": "Contents",
+        "auto_toc_maxdepth": 2,
+        "enable_eval_rst": True,
+        "enable_math": True,
+        "enable_inline_math": True,
+    }
+    app.add_config_value("recommonmark_config", params, True)
+    app.add_transform(AutoStructify)
+
+
+# Enable markdown
+extensions.append("recommonmark")
 
 # The suffix of source filenames.
 source_suffix = [".rst", ".md"]
@@ -106,8 +109,8 @@ source_suffix = [".rst", ".md"]
 master_doc = "index"
 
 # General information about the project.
-project = "FileBackedArray"
-copyright = "2023, Jayaram Kancherla"
+project = "hdf5array"
+copyright = "2024, Jayaram Kancherla"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -118,7 +121,7 @@ copyright = "2023, Jayaram Kancherla"
 # If you don’t need the separation provided between version and release,
 # just set them both to the same value.
 try:
-    from filebackedarray import __version__ as version
+    from hdf5array import __version__ as version
 except ImportError:
     version = ""
 
@@ -248,7 +251,7 @@ html_static_path = ["_static"]
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "FileBackedArray-doc"
+htmlhelp_basename = "hdf5array-doc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -265,7 +268,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "user_guide.tex", "FileBackedArray Documentation", "Jayaram Kancherla", "manual")
+    ("index", "user_guide.tex", "hdf5array Documentation", "jkanche", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
