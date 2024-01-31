@@ -1,6 +1,6 @@
 import numpy
 import h5py
-from filebackedarray import Hdf5DenseArray
+from hdf5array import Hdf5DenseArray
 import delayedarray
 import tempfile
 

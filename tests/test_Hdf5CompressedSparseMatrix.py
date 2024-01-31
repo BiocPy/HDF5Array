@@ -1,6 +1,6 @@
 import numpy
 import h5py
-from filebackedarray import Hdf5CompressedSparseMatrix
+from hdf5array import Hdf5CompressedSparseMatrix
 import delayedarray
 import tempfile
 import scipy.sparse

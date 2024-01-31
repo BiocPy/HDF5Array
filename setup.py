@@ -1,5 +1,5 @@
 """
-    Setup file for FileBackedArray.
+    Setup file for hdf5array.
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 4.5.

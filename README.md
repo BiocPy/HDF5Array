@@ -1,20 +1,20 @@
 <!-- These are examples of badges you might want to add to your README:
      please update the URLs accordingly
 
-[![Built Status](https://api.cirrus-ci.com/github/<USER>/FileBackedArray.svg?branch=main)](https://cirrus-ci.com/github/<USER>/FileBackedArray)
-[![ReadTheDocs](https://readthedocs.org/projects/FileBackedArray/badge/?version=latest)](https://FileBackedArray.readthedocs.io/en/stable/)
-[![Coveralls](https://img.shields.io/coveralls/github/<USER>/FileBackedArray/main.svg)](https://coveralls.io/r/<USER>/FileBackedArray)
-[![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/FileBackedArray.svg)](https://anaconda.org/conda-forge/FileBackedArray)
-[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/FileBackedArray)
+[![Built Status](https://api.cirrus-ci.com/github/<USER>/hdf5array.svg?branch=main)](https://cirrus-ci.com/github/<USER>/hdf5array)
+[![ReadTheDocs](https://readthedocs.org/projects/hdf5array/badge/?version=latest)](https://hdf5array.readthedocs.io/en/stable/)
+[![Coveralls](https://img.shields.io/coveralls/github/<USER>/hdf5array/main.svg)](https://coveralls.io/r/<USER>/hdf5array)
+[![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/hdf5array.svg)](https://anaconda.org/conda-forge/hdf5array)
+[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/hdf5array)
 -->
 
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
-[![PyPI-Server](https://img.shields.io/pypi/v/FileBackedArray.svg)](https://pypi.org/project/FileBackedArray/)
-[![Monthly Downloads](https://pepy.tech/badge/FileBackedArray/month)](https://pepy.tech/project/FileBackedArray)
-![Unit tests](https://github.com/BiocPy/FileBackedArray/actions/workflows/pypi-test.yml/badge.svg)
+[![PyPI-Server](https://img.shields.io/pypi/v/hdf5array.svg)](https://pypi.org/project/hdf5array/)
+[![Monthly Downloads](https://pepy.tech/badge/hdf5array/month)](https://pepy.tech/project/hdf5array)
+![Unit tests](https://github.com/BiocPy/hdf5array/actions/workflows/pypi-test.yml/badge.svg)
 
 
-# FileBackedArray
+# hdf5array
 
 ## Introduction
 
@@ -25,10 +25,10 @@ in a manner that is trivially compatible with other data structures in the [**Bi
 
 ## Installation
 
-This package can be installed from [PyPI](https://pypi.org/project/filebackedarray/) with the usual commands:
+This package can be installed from [PyPI](https://pypi.org/project/hdf5array/) with the usual commands:
 
 ```shell
-pip install filebackedarray
+pip install hdf5array
 ```
 
 ## Quick start
@@ -47,8 +47,8 @@ with h5py.File("whee.h5", "w") as handle:
 We can now represent it as a `Hdf5DenseArray`:
 
 ```python
-import filebackedarray
-arr = filebackedarray.Hdf5DenseArray("whee.h5", "yay", native_order=True)
+import hdf5array
+arr = hdf5array.Hdf5DenseArray("whee.h5", "yay", native_order=True)
 ## <40 x 50 x 100> Hdf5DenseArray object of type 'float64'
 ## [[[0.63008796, 0.34849183, 0.75621679, ..., 0.07343495, 0.63095765,
 ##    0.625732  ],
@@ -75,7 +75,7 @@ transformed = numpy.log1p(arr / scaling)
 ##   ...,
 ```
 
-Check out the [documentation](https://biocpy.github.io/FileBackedArray/) for more details.
+Check out the [documentation](https://biocpy.github.io/hdf5array/) for more details.
 
 ## Handling sparse matrices
 
@@ -98,8 +98,8 @@ Note that there is some variation in this HDF5 compressed sparse format, notably
 The constructor will not do any auto-detection so we need to provide this information explicitly:
 
 ```python
-import filebackedarray
-arr = filebackedarray.Hdf5CompressedSparseMatrix(
+import hdf5array
+arr = hdf5array.Hdf5CompressedSparseMatrix(
     "sparse_whee.h5", 
     "sparse_blah", 
     shape=(100, 200), 
