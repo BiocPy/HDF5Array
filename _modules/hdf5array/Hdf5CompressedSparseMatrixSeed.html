@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>hdf5array.Hdf5CompressedSparseMatrixSeed - hdf5array 0.2.0 documentation</title>
+        <title>hdf5array.Hdf5CompressedSparseMatrixSeed - hdf5array 0.2.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">hdf5array 0.2.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">hdf5array 0.2.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">hdf5array 0.2.0 documentation</span>
+  <span class="sidebar-brand-text">hdf5array 0.2.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -196,12 +196,14 @@
         </div>
         <article role="main">
           <h1>Source code for hdf5array.Hdf5CompressedSparseMatrixSeed</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span>
 <span class="kn">from</span> <span class="nn">delayedarray</span> <span class="kn">import</span> <span class="n">extract_dense_array</span><span class="p">,</span> <span class="n">extract_sparse_array</span><span class="p">,</span> <span class="n">chunk_shape</span><span class="p">,</span> <span class="n">DelayedArray</span><span class="p">,</span> <span class="n">wrap</span><span class="p">,</span> <span class="n">is_sparse</span><span class="p">,</span> <span class="n">SparseNdarray</span><span class="p">,</span> <span class="n">is_masked</span>
 <span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">issubdtype</span><span class="p">,</span> <span class="n">array</span>
 <span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span>
+
+<span class="kn">from</span> <span class="nn">biocutils.package_utils</span> <span class="kn">import</span> <span class="n">is_package_installed</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;LTLA&quot;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;LTLA&quot;</span>
@@ -680,6 +682,34 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.is_masked.is_masked`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="kc">False</span></div>
 
+
+<span class="k">if</span> <span class="n">is_package_installed</span><span class="p">(</span><span class="s2">&quot;scipy&quot;</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">scipy.sparse</span>
+    <span class="kn">from</span> <span class="nn">delayedarray.to_scipy_sparse_matrix</span> <span class="kn">import</span> <span class="n">to_scipy_sparse_matrix</span>
+
+<div class="viewcode-block" id="to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix">
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix">[docs]</a>
+    <span class="nd">@to_scipy_sparse_matrix</span><span class="o">.</span><span class="n">register</span>
+    <span class="k">def</span> <span class="nf">to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrix</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;coo&quot;</span><span class="p">,</span> <span class="s2">&quot;csr&quot;</span><span class="p">,</span> <span class="s2">&quot;csc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;csc&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;See :py:func:`delayedarray.to_scipy_sparse_matrix.to_scipy_sparse_matrix`.&quot;&quot;&quot;</span>
+
+        <span class="k">with</span> <span class="n">File</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="n">_data</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">data_name</span><span class="p">][:]</span>
+            <span class="n">_indices</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">indices_name</span><span class="p">][:]</span>
+            <span class="n">_indptr</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">indptr_name</span><span class="p">][:]</span>
+
+            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">by_column</span><span class="p">:</span>
+                <span class="n">_matrix</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">((</span><span class="n">_data</span><span class="p">,</span> <span class="n">_indices</span><span class="p">,</span> <span class="n">_indptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_matrix</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">_data</span><span class="p">,</span> <span class="n">_indices</span><span class="p">,</span> <span class="n">_indptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;csc&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_matrix</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;csr&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_matrix</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_matrix</span><span class="o">.</span><span class="n">tocoo</span><span class="p">()</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -712,7 +742,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
+</div><script src="../../_static/documentation_options.js?v=37f418d5"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
