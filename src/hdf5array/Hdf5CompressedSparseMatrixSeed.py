@@ -1,9 +1,11 @@
-from typing import Optional, Sequence, Tuple, Callable
+from typing import Optional, Sequence, Tuple, Callable, Literal
 from delayedarray import extract_dense_array, extract_sparse_array, chunk_shape, DelayedArray, wrap, is_sparse, SparseNdarray, is_masked
 from h5py import File
 import numpy
 from numpy import ndarray, dtype, integer, zeros, issubdtype, array
 from bisect import bisect_left
+
+from biocutils.package_utils import is_package_installed
 
 __author__ = "LTLA"
 __copyright__ = "LTLA"
@@ -458,3 +460,28 @@ def wrap_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
 def is_masked_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed) -> bool:
     """See :py:meth:`~delayedarray.is_masked.is_masked`."""
     return False
+
+if is_package_installed("scipy"):
+    import scipy.sparse
+    from delayedarray.to_scipy_sparse_matrix import to_scipy_sparse_matrix
+
+    @to_scipy_sparse_matrix.register
+    def to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix(x: Hdf5CompressedSparseMatrix, format: Literal["coo", "csr", "csc"] = "csc") -> scipy.sparse.spmatrix:
+        """See :py:func:`delayedarray.to_scipy_sparse_matrix.to_scipy_sparse_matrix`."""
+
+        with File(x.path, "r") as handle:
+            _data = handle[x.data_name][:]
+            _indices = handle[x.indices_name][:]
+            _indptr = handle[x.indptr_name][:]
+
+            if x.by_column:
+                _matrix = scipy.sparse.csc_matrix((_data, _indices, _indptr), shape=x.shape, dtype=x.dtype)
+            else:
+                _matrix = scipy.sparse.csr_matrix((_data, _indices, _indptr), shape=x.shape, dtype=x.dtype)
+
+        if format == "csc":
+            return _matrix.tocsc()
+        elif format == "csr":
+            return _matrix.tocsr()
+        else:
+            return _matrix.tocoo()
