@@ -122,3 +122,18 @@ def test_Hdf5CompressedSparseMatrix_properties():
 
     rewrap = delayedarray.wrap(arr.seed)
     assert isinstance(rewrap, Hdf5CompressedSparseMatrix)
+
+def test_Hdf5CompressedSparseMatrix_to_sparse():
+    shape = (100, 200)
+    y = scipy.sparse.random(*shape, 0.1).tocsr()
+    path, group = _mockup(y)
+    arr = Hdf5CompressedSparseMatrix(path, group, shape=shape, by_column=False)
+
+    _to_csr = delayedarray.to_scipy_sparse_matrix(arr, "csr")
+    assert isinstance(_to_csr, scipy.sparse.csr_matrix)
+
+    _to_csc = delayedarray.to_scipy_sparse_matrix(arr, "csc")
+    assert isinstance(_to_csc, scipy.sparse.csc_matrix)
+
+    _to_coo = delayedarray.to_scipy_sparse_matrix(arr, "coo")
+    assert isinstance(_to_coo, scipy.sparse.coo_matrix)
