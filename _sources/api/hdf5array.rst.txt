@@ -1,0 +1,29 @@
+hdf5array package
+=================
+
+Submodules
+----------
+
+hdf5array.Hdf5CompressedSparseMatrixSeed module
+-----------------------------------------------
+
+.. automodule:: hdf5array.Hdf5CompressedSparseMatrixSeed
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+hdf5array.Hdf5DenseArraySeed module
+-----------------------------------
+
+.. automodule:: hdf5array.Hdf5DenseArraySeed
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: hdf5array
+   :members:
+   :undoc-members:
+   :show-inheritance:

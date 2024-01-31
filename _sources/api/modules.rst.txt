@@ -1,7 +1,7 @@
-filebackedarray
-===============
+hdf5array
+=========
 
 .. toctree::
    :maxdepth: 4
 
-   filebackedarray
+   hdf5array

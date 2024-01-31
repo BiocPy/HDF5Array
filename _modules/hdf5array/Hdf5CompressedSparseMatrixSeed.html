@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>filebackedarray.Hdf5CompressedSparseMatrixSeed - FileBackedArray 0.1.1 documentation</title>
+    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+        <title>hdf5array.Hdf5CompressedSparseMatrixSeed - hdf5array 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">FileBackedArray 0.1.1 documentation</div></a>
+      <a href="../../index.html"><div class="brand">hdf5array 0.2.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">FileBackedArray 0.1.1 documentation</span>
+  <span class="sidebar-brand-text">hdf5array 0.2.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -155,12 +155,11 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributions &amp; Help</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../authors.html">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/modules.html">Module Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Module Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../api/filebackedarray.html">filebackedarray package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hdf5array.html">hdf5array package</a></li>
 </ul>
 </li>
 </ul>
@@ -196,10 +195,11 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for filebackedarray.Hdf5CompressedSparseMatrixSeed</h1><div class="highlight"><pre>
+          <h1>Source code for hdf5array.Hdf5CompressedSparseMatrixSeed</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span>
-<span class="kn">from</span> <span class="nn">delayedarray</span> <span class="kn">import</span> <span class="n">extract_dense_array</span><span class="p">,</span> <span class="n">extract_sparse_array</span><span class="p">,</span> <span class="n">chunk_shape</span><span class="p">,</span> <span class="n">DelayedArray</span><span class="p">,</span> <span class="n">wrap</span><span class="p">,</span> <span class="n">is_sparse</span><span class="p">,</span> <span class="n">SparseNdarray</span>
+<span class="kn">from</span> <span class="nn">delayedarray</span> <span class="kn">import</span> <span class="n">extract_dense_array</span><span class="p">,</span> <span class="n">extract_sparse_array</span><span class="p">,</span> <span class="n">chunk_shape</span><span class="p">,</span> <span class="n">DelayedArray</span><span class="p">,</span> <span class="n">wrap</span><span class="p">,</span> <span class="n">is_sparse</span><span class="p">,</span> <span class="n">SparseNdarray</span><span class="p">,</span> <span class="n">is_masked</span>
 <span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">issubdtype</span><span class="p">,</span> <span class="n">array</span>
 <span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span>
 
@@ -209,7 +209,7 @@
 
 
 <div class="viewcode-block" id="Hdf5CompressedSparseMatrixSeed">
-<a class="viewcode-back" href="../../api/filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed">[docs]</a>
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="k">class</span> <span class="nc">Hdf5CompressedSparseMatrixSeed</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compressed sparse matrix stored in a HDF5 file, represented as a</span>
 <span class="sd">    ``DelayedArray`` seed. This assumes that there are three datasets; ``data``</span>
@@ -394,7 +394,7 @@
 
 
 <div class="viewcode-block" id="is_sparse_Hdf5CompressedSparseMatrixSeed">
-<a class="viewcode-back" href="../../api/filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.is_sparse_Hdf5CompressedSparseMatrixSeed">[docs]</a>
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.is_sparse_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@is_sparse</span><span class="o">.</span><span class="n">register</span>
 <span class="k">def</span> <span class="nf">is_sparse_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.is_sparse.is_sparse`.&quot;&quot;&quot;</span>
@@ -403,7 +403,7 @@
 
 
 <div class="viewcode-block" id="chunk_shape_Hdf5CompressedSparseMatrixSeed">
-<a class="viewcode-back" href="../../api/filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.chunk_shape_Hdf5CompressedSparseMatrixSeed">[docs]</a>
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.chunk_shape_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@chunk_shape</span><span class="o">.</span><span class="n">register</span>
 <span class="k">def</span> <span class="nf">chunk_shape_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.chunk_shape.chunk_shape`.&quot;&quot;&quot;</span>
@@ -466,13 +466,10 @@
 
 
 <div class="viewcode-block" id="extract_dense_array_Hdf5CompressedSparseMatrixSeed">
-<a class="viewcode-back" href="../../api/filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_dense_array_Hdf5CompressedSparseMatrixSeed">[docs]</a>
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.extract_dense_array_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@extract_dense_array</span><span class="o">.</span><span class="n">register</span>
-<span class="k">def</span> <span class="nf">extract_dense_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">extract_dense_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">subset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">subset</span> <span class="o">=</span> <span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-
     <span class="n">output</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span> 
@@ -508,13 +505,10 @@
 
 
 <div class="viewcode-block" id="extract_sparse_array_Hdf5CompressedSparseMatrixSeed">
-<a class="viewcode-back" href="../../api/filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.extract_sparse_array_Hdf5CompressedSparseMatrixSeed">[docs]</a>
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.extract_sparse_array_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@extract_sparse_array</span><span class="o">.</span><span class="n">register</span>
-<span class="k">def</span> <span class="nf">extract_sparse_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">extract_sparse_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">SparseNdarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.extract_sparse_array.extract_sparse_array`.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">subset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">subset</span> <span class="o">=</span> <span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-
     <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span> 
         <span class="n">primary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">secondary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -575,7 +569,7 @@
 
 
 <div class="viewcode-block" id="Hdf5CompressedSparseMatrix">
-<a class="viewcode-back" href="../../api/filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix">[docs]</a>
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix">[docs]</a>
 <span class="k">class</span> <span class="nc">Hdf5CompressedSparseMatrix</span><span class="p">(</span><span class="n">DelayedArray</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compressed sparse matrix in a HDF5 file as a ``DelayedArray``. This</span>
 <span class="sd">    subclass allows developers to implement custom methods for HDF5-backed</span>
@@ -671,11 +665,20 @@
 
 
 <div class="viewcode-block" id="wrap_Hdf5CompressedSparseMatrixSeed">
-<a class="viewcode-back" href="../../api/filebackedarray.html#filebackedarray.Hdf5CompressedSparseMatrixSeed.wrap_Hdf5CompressedSparseMatrixSeed">[docs]</a>
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.wrap_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@wrap</span><span class="o">.</span><span class="n">register</span>
 <span class="k">def</span> <span class="nf">wrap_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.wrap.wrap`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Hdf5CompressedSparseMatrix</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="is_masked_Hdf5CompressedSparseMatrixSeed">
+<a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.is_masked_Hdf5CompressedSparseMatrixSeed">[docs]</a>
+<span class="nd">@is_masked</span><span class="o">.</span><span class="n">register</span>
+<span class="k">def</span> <span class="nf">is_masked_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.is_masked.is_masked`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
 
 </pre></div>
         </article>
@@ -689,7 +692,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023, Jayaram Kancherla
+                Copyright &#169; 2024, Jayaram Kancherla
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -709,7 +712,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../../_static/documentation_options.js?v=938c9ccc"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
