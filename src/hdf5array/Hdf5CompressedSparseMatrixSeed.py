@@ -1,5 +1,5 @@
 from typing import Optional, Sequence, Tuple, Callable, Literal
-from delayedarray import extract_dense_array, extract_sparse_array, chunk_shape, DelayedArray, wrap, is_sparse, SparseNdarray, is_masked
+from delayedarray import extract_dense_array, extract_sparse_array, chunk_grid, DelayedArray, wrap, is_sparse, SparseNdarray, is_masked, chunk_shape_to_grid
 from h5py import File
 import numpy
 from numpy import ndarray, dtype, integer, zeros, issubdtype, array
@@ -200,13 +200,19 @@ def is_sparse_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
     return True
 
 
-@chunk_shape.register
-def chunk_shape_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
-    """See :py:meth:`~delayedarray.chunk_shape.chunk_shape`."""
+@chunk_grid.register
+def chunk_grid_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
+    """
+    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
+
+    The cost factor is set to 20 to reflect the computational work involved in
+    extracting data from disk.
+    """
     if x._by_column:
-        return (x._shape[0], 1)
+        chunks = (x._shape[0], 1)
     else:
-        return (1, x._shape[1])
+        chunks = (1, x._shape[1])
+    return chunk_shape_to_grid(chunks, x.shape, cost_factor=20) 
 
 
 def _extract_array(

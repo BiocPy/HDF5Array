@@ -1,5 +1,5 @@
 from typing import Optional, Sequence, Tuple, Union
-from delayedarray import extract_dense_array, chunk_shape, DelayedArray, wrap, is_masked
+from delayedarray import extract_dense_array, chunk_grid, DelayedArray, wrap, is_masked, chunk_shape_to_grid
 from h5py import File
 import numpy
 from numpy import ndarray, dtype, asfortranarray, ix_
@@ -98,10 +98,15 @@ class Hdf5DenseArraySeed:
         return self._name
 
 
-@chunk_shape.register
-def chunk_shape_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
-    """See :py:meth:`~delayedarray.chunk_shape.chunk_shape`."""
-    return x._chunks
+@chunk_grid.register
+def chunk_grid_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
+    """
+    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
+
+    The cost factor is set to 20 to reflect the computational work involved in
+    extracting data from disk.
+    """
+    return chunk_shape_to_grid(x._chunks, x._shape, cost_factor=20) 
 
 
 @extract_dense_array.register

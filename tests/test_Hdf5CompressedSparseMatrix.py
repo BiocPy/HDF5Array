@@ -5,6 +5,8 @@ import delayedarray
 import tempfile
 import scipy.sparse
 
+from utils import chunk_shape
+
 __author__ = "jkanche"
 __copyright__ = "jkanche"
 __license__ = "MIT"
@@ -30,7 +32,7 @@ def test_Hdf5CompressedSparseMatrix_column():
 
     assert arr.shape == shape
     assert arr.dtype == y.dtype
-    assert delayedarray.chunk_shape(arr) == (100, 1)
+    assert chunk_shape(arr) == (100, 1)
     assert (delayedarray.to_dense_array(arr) == y.toarray()).all()
     assert not delayedarray.is_masked(arr)
 
@@ -63,7 +65,7 @@ def test_Hdf5CompressedSparseMatrix_row():
 
     assert arr.shape == shape 
     assert arr.dtype == y.dtype
-    assert delayedarray.chunk_shape(arr) == (1, 200)
+    assert chunk_shape(arr) == (1, 200)
     assert (delayedarray.to_dense_array(arr) == y.toarray()).all()
 
     # Check that consecutive slicing works as expected.
@@ -95,7 +97,7 @@ def test_Hdf5CompressedSparseMatrix_dtype():
 
     assert arr.shape == shape 
     assert arr.dtype == numpy.int16
-    assert delayedarray.chunk_shape(arr) == (55, 1)
+    assert chunk_shape(arr) == (55, 1)
 
     as_dense = delayedarray.to_dense_array(arr)
     assert (as_dense == y.toarray()).all()
