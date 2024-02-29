@@ -404,7 +404,7 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(
 
 
 class Hdf5CompressedSparseMatrix(DelayedArray):
-    """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``.
+    """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``."""
 
     def __init__(
         self,
@@ -414,8 +414,7 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
         by_column: bool,
         **kwargs
     ):
-        """
-        To construct a ``Hdf5CompressedSparseMatrix`` from an existing
+        """To construct a ``Hdf5CompressedSparseMatrix`` from an existing
         :py:class:`~Hdf5CompressedSparseMatrixSeed`, use
         :py:meth:`~delayedarray.wrap.wrap` instead.
 
@@ -437,6 +436,7 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
                 Further arguments to pass to the
                 :py:class:`~Hdf5CompressedSparseMatrixSeed` constructor.
         """
+
         if isinstance(path, Hdf5CompressedSparseMatrixSeed):
             seed = path
         else:
