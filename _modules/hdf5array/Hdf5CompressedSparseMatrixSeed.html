@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>hdf5array.Hdf5CompressedSparseMatrixSeed - hdf5array 0.3.0 documentation</title>
+        <title>hdf5array.Hdf5CompressedSparseMatrixSeed - hdf5array 0.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">hdf5array 0.3.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">hdf5array 0.3.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">hdf5array 0.3.0 documentation</span>
+  <span class="sidebar-brand-text">hdf5array 0.3.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -196,14 +196,24 @@
         </div>
         <article role="main">
           <h1>Source code for hdf5array.Hdf5CompressedSparseMatrixSeed</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span>
-<span class="kn">from</span> <span class="nn">delayedarray</span> <span class="kn">import</span> <span class="n">extract_dense_array</span><span class="p">,</span> <span class="n">extract_sparse_array</span><span class="p">,</span> <span class="n">chunk_grid</span><span class="p">,</span> <span class="n">DelayedArray</span><span class="p">,</span> <span class="n">wrap</span><span class="p">,</span> <span class="n">is_sparse</span><span class="p">,</span> <span class="n">SparseNdarray</span><span class="p">,</span> <span class="n">is_masked</span><span class="p">,</span> <span class="n">chunk_shape_to_grid</span>
-<span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span>
-<span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">issubdtype</span><span class="p">,</span> <span class="n">array</span>
-<span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span>
+<span></span><span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">biocutils.package_utils</span> <span class="kn">import</span> <span class="n">is_package_installed</span>
+<span class="kn">from</span> <span class="nn">delayedarray</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DelayedArray</span><span class="p">,</span>
+    <span class="n">SparseNdarray</span><span class="p">,</span>
+    <span class="n">chunk_grid</span><span class="p">,</span>
+    <span class="n">chunk_shape_to_grid</span><span class="p">,</span>
+    <span class="n">extract_dense_array</span><span class="p">,</span>
+    <span class="n">extract_sparse_array</span><span class="p">,</span>
+    <span class="n">is_masked</span><span class="p">,</span>
+    <span class="n">is_sparse</span><span class="p">,</span>
+    <span class="n">wrap</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">issubdtype</span><span class="p">,</span> <span class="n">zeros</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;LTLA&quot;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;LTLA&quot;</span>
@@ -213,16 +223,17 @@
 <div class="viewcode-block" id="Hdf5CompressedSparseMatrixSeed">
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="k">class</span> <span class="nc">Hdf5CompressedSparseMatrixSeed</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compressed sparse matrix stored in a HDF5 file, represented as a</span>
-<span class="sd">    ``DelayedArray`` seed. This assumes that there are three datasets; ``data``</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compressed sparse matrix stored in a HDF5 file, represented as a ``DelayedArray`` seed.</span>
+
+<span class="sd">    This assumes that there are three datasets; ``data``</span>
 <span class="sd">    containing the data values, ``indices`` containing the indices, and</span>
 <span class="sd">    ``indptr`` containing the pointers to the start of every row/column.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> 
-        <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-        <span class="n">group_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> 
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">group_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">by_column</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -233,7 +244,7 @@
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            path: </span>
+<span class="sd">            path:</span>
 <span class="sd">                Path to the HDF5 file.</span>
 
 <span class="sd">            group_name:</span>
@@ -287,24 +298,34 @@
 
         <span class="k">with</span> <span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_indptr_name</span><span class="p">][:]</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">issubdtype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">integer</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;indptr&#39; dataset should be 1-dimensional and contain integers&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">issubdtype</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">integer</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;&#39;indptr&#39; dataset should be 1-dimensional and contain integers&quot;</span>
+                <span class="p">)</span>
             <span class="k">if</span> <span class="n">by_column</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">)</span> <span class="o">!=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;indptr&#39; dataset should have length equal to the number of columns + 1&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;&#39;indptr&#39; dataset should have length equal to the number of columns + 1&quot;</span>
+                    <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">)</span> <span class="o">!=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;indptr&#39; dataset should have length equal to the number of columns + 1&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;&#39;indptr&#39; dataset should have length equal to the number of columns + 1&quot;</span>
+                    <span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;first entry of &#39;indptr&#39; dataset should be zero&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">)):</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;entries of &#39;indptr&#39; should be ordered&quot;</span><span class="p">)</span>
 
             <span class="n">ddset</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_name</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ddset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">ddset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;data&#39; dataset should have length equal to the number of non-zero elements&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_modify_dtype</span> <span class="o">=</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dtype</span> <span class="o">!=</span> <span class="n">ddset</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;&#39;data&#39; dataset should have length equal to the number of non-zero elements&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modify_dtype</span> <span class="o">=</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dtype</span> <span class="o">!=</span> <span class="n">ddset</span><span class="o">.</span><span class="n">dtype</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modify_dtype</span><span class="p">:</span>
                 <span class="n">dtype</span> <span class="o">=</span> <span class="n">ddset</span><span class="o">.</span><span class="n">dtype</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dtype</span> <span class="o">=</span> <span class="n">dtype</span>
@@ -312,10 +333,14 @@
             <span class="c1"># Not going to check for consistency of the indices themselves.</span>
             <span class="n">idset</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices_name</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">idset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;indices&#39; dataset should have length equal to the number of non-zero elements&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;&#39;indices&#39; dataset should have length equal to the number of non-zero elements&quot;</span>
+                <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">issubdtype</span><span class="p">(</span><span class="n">idset</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">integer</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;indices&#39; dataset should contain integers&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_modify_index_dtype</span> <span class="o">=</span> <span class="p">(</span><span class="n">index_dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">index_dtype</span> <span class="o">!=</span> <span class="n">idset</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modify_index_dtype</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">index_dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">index_dtype</span> <span class="o">!=</span> <span class="n">idset</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modify_index_dtype</span><span class="p">:</span>
                 <span class="n">index_dtype</span> <span class="o">=</span> <span class="n">idset</span><span class="o">.</span><span class="n">dtype</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_index_dtype</span> <span class="o">=</span> <span class="n">index_dtype</span>
@@ -408,33 +433,31 @@
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.chunk_grid_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@chunk_grid</span><span class="o">.</span><span class="n">register</span>
 <span class="k">def</span> <span class="nf">chunk_grid_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.</span>
 
-<span class="sd">    The cost factor is set to 20 to reflect the computational work involved in</span>
-<span class="sd">    extracting data from disk.</span>
+<span class="sd">    The cost factor is set to 20 to reflect the computational work involved in extracting data from disk.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span>
         <span class="n">chunks</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">chunks</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">chunk_shape_to_grid</span><span class="p">(</span><span class="n">chunks</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">cost_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> </div>
+    <span class="k">return</span> <span class="n">chunk_shape_to_grid</span><span class="p">(</span><span class="n">chunks</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">cost_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span></div>
 
 
 
 <span class="k">def</span> <span class="nf">_extract_array</span><span class="p">(</span>
-    <span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> 
-    <span class="n">primary_sub</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> 
-    <span class="n">secondary_sub</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> 
-    <span class="n">secondary_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> 
-    <span class="n">f_individual</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> 
-    <span class="n">f_consecutive</span><span class="p">:</span> <span class="n">Callable</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span>
+    <span class="n">primary_sub</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">secondary_sub</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">secondary_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">f_individual</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">f_consecutive</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">secondary_sub</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">secondary_start</span> <span class="o">=</span> <span class="n">secondary_sub</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">secondary_end</span> <span class="o">=</span> <span class="n">secondary_sub</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">is_consecutive</span> <span class="o">=</span> <span class="p">(</span><span class="n">secondary_end</span> <span class="o">-</span> <span class="n">secondary_start</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">secondary_sub</span><span class="p">))</span>
+    <span class="n">is_consecutive</span> <span class="o">=</span> <span class="n">secondary_end</span> <span class="o">-</span> <span class="n">secondary_start</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">secondary_sub</span><span class="p">)</span>
     <span class="n">search_start</span> <span class="o">=</span> <span class="n">secondary_start</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="n">search_end</span> <span class="o">=</span> <span class="n">secondary_end</span> <span class="o">&lt;</span> <span class="n">secondary_len</span>
 
@@ -448,12 +471,14 @@
             <span class="n">curdata</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">start_pos</span><span class="p">:</span><span class="n">end_pos</span><span class="p">]</span>
             <span class="n">curindices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">start_pos</span><span class="p">:</span><span class="n">end_pos</span><span class="p">]</span>
 
-            <span class="n">start_idx</span> <span class="o">=</span> <span class="mi">0</span> 
+            <span class="n">start_idx</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">search_start</span><span class="p">:</span>
                 <span class="n">start_idx</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="n">curindices</span><span class="p">,</span> <span class="n">secondary_start</span><span class="p">)</span>
             <span class="n">end_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">curindices</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">search_end</span><span class="p">:</span>
-                <span class="n">end_idx</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="n">curindices</span><span class="p">,</span> <span class="n">secondary_end</span><span class="p">,</span> <span class="n">lo</span><span class="o">=</span><span class="n">start_idx</span><span class="p">,</span> <span class="n">hi</span><span class="o">=</span><span class="n">end_idx</span><span class="p">)</span>
+                <span class="n">end_idx</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span>
+                    <span class="n">curindices</span><span class="p">,</span> <span class="n">secondary_end</span><span class="p">,</span> <span class="n">lo</span><span class="o">=</span><span class="n">start_idx</span><span class="p">,</span> <span class="n">hi</span><span class="o">=</span><span class="n">end_idx</span>
+                <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">is_consecutive</span><span class="p">:</span>
                 <span class="n">mod_indices</span> <span class="o">=</span> <span class="n">curindices</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">]</span>
@@ -476,36 +501,41 @@
 <div class="viewcode-block" id="extract_dense_array_Hdf5CompressedSparseMatrixSeed">
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.extract_dense_array_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@extract_dense_array</span><span class="o">.</span><span class="n">register</span>
-<span class="k">def</span> <span class="nf">extract_dense_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">extract_dense_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`.&quot;&quot;&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span> 
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span>
         <span class="n">primary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">secondary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">secondary_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">def</span> <span class="nf">_individual</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">r</span><span class="p">,</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
         <span class="k">def</span> <span class="nf">_consecutive</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="n">primary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">secondary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">secondary_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="k">def</span> <span class="nf">_individual</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">r</span><span class="p">,</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
         <span class="k">def</span> <span class="nf">_consecutive</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">r</span><span class="p">,</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
 
     <span class="n">_extract_array</span><span class="p">(</span>
-        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> 
-        <span class="n">primary_sub</span><span class="o">=</span><span class="n">primary_sub</span><span class="p">,</span> 
-        <span class="n">secondary_sub</span><span class="o">=</span><span class="n">secondary_sub</span><span class="p">,</span> 
-        <span class="n">secondary_len</span><span class="o">=</span><span class="n">secondary_len</span><span class="p">,</span> 
-        <span class="n">f_individual</span><span class="o">=</span><span class="n">_individual</span><span class="p">,</span> 
-        <span class="n">f_consecutive</span><span class="o">=</span><span class="n">_consecutive</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+        <span class="n">primary_sub</span><span class="o">=</span><span class="n">primary_sub</span><span class="p">,</span>
+        <span class="n">secondary_sub</span><span class="o">=</span><span class="n">secondary_sub</span><span class="p">,</span>
+        <span class="n">secondary_len</span><span class="o">=</span><span class="n">secondary_len</span><span class="p">,</span>
+        <span class="n">f_individual</span><span class="o">=</span><span class="n">_individual</span><span class="p">,</span>
+        <span class="n">f_consecutive</span><span class="o">=</span><span class="n">_consecutive</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">output</span></div>
@@ -515,61 +545,71 @@
 <div class="viewcode-block" id="extract_sparse_array_Hdf5CompressedSparseMatrixSeed">
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.extract_sparse_array_Hdf5CompressedSparseMatrixSeed">[docs]</a>
 <span class="nd">@extract_sparse_array</span><span class="o">.</span><span class="n">register</span>
-<span class="k">def</span> <span class="nf">extract_sparse_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">SparseNdarray</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">extract_sparse_array_Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SparseNdarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.extract_sparse_array.extract_sparse_array`.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span> 
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span>
         <span class="n">primary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">secondary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">primary_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># primary_len = x.shape[1]</span>
         <span class="n">secondary_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">primary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">secondary_sub</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">primary_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># primary_len = x.shape[0]</span>
         <span class="n">secondary_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
         <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(([],</span> <span class="p">[]))</span>
 
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span> 
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_by_column</span><span class="p">:</span>
+
         <span class="k">def</span> <span class="nf">_individual</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="n">output</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
             <span class="n">output</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
         <span class="k">def</span> <span class="nf">_consecutive</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
             <span class="n">output</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
     <span class="k">else</span><span class="p">:</span>
+
         <span class="k">def</span> <span class="nf">_individual</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="n">output</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
             <span class="n">output</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
         <span class="k">def</span> <span class="nf">_consecutive</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
                 <span class="n">output</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
                 <span class="n">output</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
 
     <span class="n">_extract_array</span><span class="p">(</span>
-        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> 
-        <span class="n">primary_sub</span><span class="o">=</span><span class="n">primary_sub</span><span class="p">,</span> 
-        <span class="n">secondary_sub</span><span class="o">=</span><span class="n">secondary_sub</span><span class="p">,</span> 
-        <span class="n">secondary_len</span><span class="o">=</span><span class="n">secondary_len</span><span class="p">,</span> 
-        <span class="n">f_individual</span><span class="o">=</span><span class="n">_individual</span><span class="p">,</span> 
-        <span class="n">f_consecutive</span><span class="o">=</span><span class="n">_consecutive</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+        <span class="n">primary_sub</span><span class="o">=</span><span class="n">primary_sub</span><span class="p">,</span>
+        <span class="n">secondary_sub</span><span class="o">=</span><span class="n">secondary_sub</span><span class="p">,</span>
+        <span class="n">secondary_len</span><span class="o">=</span><span class="n">secondary_len</span><span class="p">,</span>
+        <span class="n">f_individual</span><span class="o">=</span><span class="n">_individual</span><span class="p">,</span>
+        <span class="n">f_consecutive</span><span class="o">=</span><span class="n">_consecutive</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">all_none</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">con</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">con</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span>  <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">con</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">con</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_index_dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="n">con</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">array</span><span class="p">(</span><span class="n">con</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_index_dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="n">array</span><span class="p">(</span><span class="n">con</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="p">)</span>
             <span class="n">all_none</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">all_none</span><span class="p">:</span>
         <span class="n">output</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">return</span> <span class="n">SparseNdarray</span><span class="p">(</span>
-        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> 
-        <span class="n">contents</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> 
-        <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_dtype</span><span class="p">,</span> 
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
+        <span class="n">contents</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_dtype</span><span class="p">,</span>
         <span class="n">index_dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">_index_dtype</span><span class="p">,</span>
         <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span></div>
@@ -579,18 +619,21 @@
 <div class="viewcode-block" id="Hdf5CompressedSparseMatrix">
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.Hdf5CompressedSparseMatrix">[docs]</a>
 <span class="k">class</span> <span class="nc">Hdf5CompressedSparseMatrix</span><span class="p">(</span><span class="n">DelayedArray</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compressed sparse matrix in a HDF5 file as a ``DelayedArray``. This</span>
-<span class="sd">    subclass allows developers to implement custom methods for HDF5-backed</span>
-<span class="sd">    sparse matrices.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compressed sparse matrix in a HDF5 file as a ``DelayedArray``.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">group_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">by_column</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        To construct a ``Hdf5CompressedSparseMatrix`` from an existing</span>
-<span class="sd">        :py:class:`~Hdf5CompressedSparseMatrixSeed`, use</span>
-<span class="sd">        :py:meth:`~delayedarray.wrap.wrap` instead.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">group_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">by_column</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;To construct a ``Hdf5CompressedSparseMatrix`` from an existing :py:class:`~Hdf5CompressedSparseMatrixSeed`,</span>
+<span class="sd">        use :py:meth:`~delayedarray.wrap.wrap` instead.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            path: </span>
+<span class="sd">            path:</span>
 <span class="sd">                Path to the HDF5 file.</span>
 
 <span class="sd">            group_name:</span>
@@ -607,10 +650,13 @@
 <span class="sd">                Further arguments to pass to the</span>
 <span class="sd">                :py:class:`~Hdf5CompressedSparseMatrixSeed` constructor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">):</span>
             <span class="n">seed</span> <span class="o">=</span> <span class="n">path</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">seed</span> <span class="o">=</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">by_column</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">seed</span> <span class="o">=</span> <span class="n">Hdf5CompressedSparseMatrixSeed</span><span class="p">(</span>
+                <span class="n">path</span><span class="p">,</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">by_column</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Hdf5CompressedSparseMatrix</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -689,6 +735,7 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
+
 <span class="k">if</span> <span class="n">is_package_installed</span><span class="p">(</span><span class="s2">&quot;scipy&quot;</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">scipy.sparse</span>
     <span class="kn">from</span> <span class="nn">delayedarray.to_scipy_sparse_matrix</span> <span class="kn">import</span> <span class="n">to_scipy_sparse_matrix</span>
@@ -696,7 +743,9 @@
 <div class="viewcode-block" id="to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix">
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5CompressedSparseMatrixSeed.to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix">[docs]</a>
     <span class="nd">@to_scipy_sparse_matrix</span><span class="o">.</span><span class="n">register</span>
-    <span class="k">def</span> <span class="nf">to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrix</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;coo&quot;</span><span class="p">,</span> <span class="s2">&quot;csr&quot;</span><span class="p">,</span> <span class="s2">&quot;csc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;csc&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">:</span> <span class="n">Hdf5CompressedSparseMatrix</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;coo&quot;</span><span class="p">,</span> <span class="s2">&quot;csr&quot;</span><span class="p">,</span> <span class="s2">&quot;csc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;csc&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;See :py:func:`delayedarray.to_scipy_sparse_matrix.to_scipy_sparse_matrix`.&quot;&quot;&quot;</span>
 
         <span class="k">with</span> <span class="n">File</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
@@ -705,9 +754,13 @@
             <span class="n">_indptr</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">indptr_name</span><span class="p">][:]</span>
 
             <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">by_column</span><span class="p">:</span>
-                <span class="n">_matrix</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">((</span><span class="n">_data</span><span class="p">,</span> <span class="n">_indices</span><span class="p">,</span> <span class="n">_indptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                <span class="n">_matrix</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">_indices</span><span class="p">,</span> <span class="n">_indptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+                <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">_matrix</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">_data</span><span class="p">,</span> <span class="n">_indices</span><span class="p">,</span> <span class="n">_indptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                <span class="n">_matrix</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">_indices</span><span class="p">,</span> <span class="n">_indptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+                <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;csc&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">_matrix</span><span class="o">.</span><span class="n">tocsc</span><span class="p">()</span>
@@ -748,7 +801,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=e259d695"></script>
+</div><script src="../../_static/documentation_options.js?v=4621528c"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>

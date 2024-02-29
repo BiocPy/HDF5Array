@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>hdf5array.Hdf5DenseArraySeed - hdf5array 0.3.0 documentation</title>
+        <title>hdf5array.Hdf5DenseArraySeed - hdf5array 0.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">hdf5array 0.3.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">hdf5array 0.3.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">hdf5array 0.3.0 documentation</span>
+  <span class="sidebar-brand-text">hdf5array 0.3.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -196,11 +196,19 @@
         </div>
         <article role="main">
           <h1>Source code for hdf5array.Hdf5DenseArraySeed</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">delayedarray</span> <span class="kn">import</span> <span class="n">extract_dense_array</span><span class="p">,</span> <span class="n">chunk_grid</span><span class="p">,</span> <span class="n">DelayedArray</span><span class="p">,</span> <span class="n">wrap</span><span class="p">,</span> <span class="n">is_masked</span><span class="p">,</span> <span class="n">chunk_shape_to_grid</span>
-<span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">asfortranarray</span><span class="p">,</span> <span class="n">ix_</span>
+<span class="kn">from</span> <span class="nn">delayedarray</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DelayedArray</span><span class="p">,</span>
+    <span class="n">chunk_grid</span><span class="p">,</span>
+    <span class="n">chunk_shape_to_grid</span><span class="p">,</span>
+    <span class="n">extract_dense_array</span><span class="p">,</span>
+    <span class="n">is_masked</span><span class="p">,</span>
+    <span class="n">wrap</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">asfortranarray</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">ix_</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;LTLA&quot;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;LTLA&quot;</span>
@@ -212,10 +220,16 @@
 <span class="k">class</span> <span class="nc">Hdf5DenseArraySeed</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;HDF5-backed dataset as a ``DelayedArray`` dense array seed.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">native_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">native_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            path: </span>
+<span class="sd">            path:</span>
 <span class="sd">                Path to the HDF5 file.</span>
 
 <span class="sd">            name:</span>
@@ -225,14 +239,14 @@
 <span class="sd">                NumPy type of the data. Defaults to the HDF5 type on disk;</span>
 <span class="sd">                otherwise, values are transformed to ``dtype`` during extraction.</span>
 
-<span class="sd">            native_order: </span>
+<span class="sd">            native_order:</span>
 <span class="sd">                Whether to use HDF5&#39;s native order of dimensions. HDF5 orders dimensions</span>
 <span class="sd">                by slowest to fastest changing. If ``native`` is True, the same ordering</span>
 <span class="sd">                is used for this array, i.e., this array&#39;s shape is the same as that</span>
 <span class="sd">                reported in the file, equivalent to C storage order.</span>
 
 <span class="sd">                If False, this array&#39;s shape is reversed compared to that reported in the</span>
-<span class="sd">                file, equivalent to Fortran storage order. In this case, the first </span>
+<span class="sd">                file, equivalent to Fortran storage order. In this case, the first</span>
 <span class="sd">                dimension in this array will be the fastest changing one, etc.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">path</span>
@@ -242,7 +256,7 @@
         <span class="k">with</span> <span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
             <span class="n">dset</span> <span class="o">=</span> <span class="n">handle</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_modify_dtype</span> <span class="o">=</span> <span class="p">(</span><span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dtype</span> <span class="o">!=</span> <span class="n">dset</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modify_dtype</span> <span class="o">=</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dtype</span> <span class="o">!=</span> <span class="n">dset</span><span class="o">.</span><span class="n">dtype</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modify_dtype</span><span class="p">:</span>
                 <span class="n">dtype</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">dtype</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dtype</span> <span class="o">=</span> <span class="n">dtype</span>
@@ -303,25 +317,25 @@
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5DenseArraySeed.chunk_grid_Hdf5DenseArraySeed">[docs]</a>
 <span class="nd">@chunk_grid</span><span class="o">.</span><span class="n">register</span>
 <span class="k">def</span> <span class="nf">chunk_grid_Hdf5DenseArraySeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5DenseArraySeed</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.</span>
 
-<span class="sd">    The cost factor is set to 20 to reflect the computational work involved in</span>
-<span class="sd">    extracting data from disk.</span>
+<span class="sd">    The cost factor is set to 20 to reflect the computational work involved in extracting data from disk.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">chunk_shape_to_grid</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_chunks</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">_shape</span><span class="p">,</span> <span class="n">cost_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> </div>
+    <span class="k">return</span> <span class="n">chunk_shape_to_grid</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_chunks</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">_shape</span><span class="p">,</span> <span class="n">cost_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="extract_dense_array_Hdf5DenseArraySeed">
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5DenseArraySeed.extract_dense_array_Hdf5DenseArraySeed">[docs]</a>
 <span class="nd">@extract_dense_array</span><span class="o">.</span><span class="n">register</span>
-<span class="k">def</span> <span class="nf">extract_dense_array_Hdf5DenseArraySeed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Hdf5DenseArraySeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">extract_dense_array_Hdf5DenseArraySeed</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Hdf5DenseArraySeed</span><span class="p">,</span> <span class="n">subset</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`.&quot;&quot;&quot;</span>
     <span class="n">converted</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">num_lists</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">subset</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">range</span><span class="p">):</span> <span class="c1"># convert back to slice for HDF5 access efficiency.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">range</span><span class="p">):</span>  <span class="c1"># convert back to slice for HDF5 access efficiency.</span>
             <span class="n">converted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">step</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">num_lists</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -377,17 +391,17 @@
 <div class="viewcode-block" id="Hdf5DenseArray">
 <a class="viewcode-back" href="../../api/hdf5array.html#hdf5array.Hdf5DenseArraySeed.Hdf5DenseArray">[docs]</a>
 <span class="k">class</span> <span class="nc">Hdf5DenseArray</span><span class="p">(</span><span class="n">DelayedArray</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;HDF5-backed dataset as a ``DelayedArray`` dense array. This subclass</span>
-<span class="sd">    allows developers to implement custom methods for HDF5-backed arrays.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HDF5-backed dataset as a ``DelayedArray`` dense array.</span>
+
+<span class="sd">    This subclass allows developers to implement custom methods for HDF5-backed arrays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        To construct a ``Hdf5DenseArray`` from an existing</span>
-<span class="sd">        :py:class:`~Hdf5DenseArraySeed`, use :py:meth:`~delayedarray.wrap.wrap`</span>
-<span class="sd">        instead.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;To construct a ``Hdf5DenseArray`` from an existing :py:class:`~Hdf5DenseArraySeed`, use</span>
+<span class="sd">        :py:meth:`~delayedarray.wrap.wrap` instead.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            path: </span>
+<span class="sd">            path:</span>
 <span class="sd">                Path to the HDF5 file.</span>
 
 <span class="sd">            name:</span>
@@ -469,7 +483,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=e259d695"></script>
+</div><script src="../../_static/documentation_options.js?v=4621528c"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
