@@ -1,8 +1,18 @@
 from typing import Optional, Sequence, Tuple, Callable, Literal
-from delayedarray import extract_dense_array, extract_sparse_array, chunk_grid, DelayedArray, wrap, is_sparse, SparseNdarray, is_masked, chunk_shape_to_grid
+from delayedarray import (
+    extract_dense_array,
+    extract_sparse_array,
+    chunk_grid,
+    DelayedArray,
+    wrap,
+    is_sparse,
+    SparseNdarray,
+    is_masked,
+    chunk_shape_to_grid,
+)
 from h5py import File
 import numpy
-from numpy import ndarray, dtype, integer, zeros, issubdtype, array
+from numpy import dtype, integer, zeros, issubdtype, array
 from bisect import bisect_left
 
 from biocutils.package_utils import is_package_installed
@@ -13,16 +23,17 @@ __license__ = "MIT"
 
 
 class Hdf5CompressedSparseMatrixSeed:
-    """Compressed sparse matrix stored in a HDF5 file, represented as a
-    ``DelayedArray`` seed. This assumes that there are three datasets; ``data``
+    """Compressed sparse matrix stored in a HDF5 file, represented as a ``DelayedArray`` seed.
+
+    This assumes that there are three datasets; ``data``
     containing the data values, ``indices`` containing the indices, and
     ``indptr`` containing the pointers to the start of every row/column.
     """
 
     def __init__(
-        self, 
-        path: str, 
-        group_name: Optional[str], 
+        self,
+        path: str,
+        group_name: Optional[str],
         shape: Tuple[int, int],
         by_column: bool,
         dtype: Optional[dtype] = None,
@@ -33,7 +44,7 @@ class Hdf5CompressedSparseMatrixSeed:
     ):
         """
         Args:
-            path: 
+            path:
                 Path to the HDF5 file.
 
             group_name:
@@ -87,24 +98,34 @@ class Hdf5CompressedSparseMatrixSeed:
 
         with File(self._path, "r") as handle:
             self._indptr = handle[self._indptr_name][:]
-            if len(self._indptr.shape) != 1 or not issubdtype(self._indptr.dtype, integer):
-                raise ValueError("'indptr' dataset should be 1-dimensional and contain integers")
+            if len(self._indptr.shape) != 1 or not issubdtype(
+                self._indptr.dtype, integer
+            ):
+                raise ValueError(
+                    "'indptr' dataset should be 1-dimensional and contain integers"
+                )
             if by_column:
                 if len(self._indptr) != shape[1] + 1:
-                    raise ValueError("'indptr' dataset should have length equal to the number of columns + 1")
+                    raise ValueError(
+                        "'indptr' dataset should have length equal to the number of columns + 1"
+                    )
             else:
                 if len(self._indptr) != shape[0] + 1:
-                    raise ValueError("'indptr' dataset should have length equal to the number of columns + 1")
+                    raise ValueError(
+                        "'indptr' dataset should have length equal to the number of columns + 1"
+                    )
             if self._indptr[0] != 0:
                 raise ValueError("first entry of 'indptr' dataset should be zero")
             for i in range(1, len(self._indptr)):
-                if self._indptr[i] < self._indptr[i-1]:
+                if self._indptr[i] < self._indptr[i - 1]:
                     raise ValueError("entries of 'indptr' should be ordered")
 
             ddset = handle[self._data_name]
             if len(ddset.shape) != 1 or ddset.shape[0] != self._indptr[-1]:
-                raise ValueError("'data' dataset should have length equal to the number of non-zero elements")
-            self._modify_dtype = (dtype is not None and dtype != ddset.dtype)
+                raise ValueError(
+                    "'data' dataset should have length equal to the number of non-zero elements"
+                )
+            self._modify_dtype = dtype is not None and dtype != ddset.dtype
             if not self._modify_dtype:
                 dtype = ddset.dtype
             self._dtype = dtype
@@ -112,10 +133,14 @@ class Hdf5CompressedSparseMatrixSeed:
             # Not going to check for consistency of the indices themselves.
             idset = handle[self._indices_name]
             if len(idset.shape) != 1 or idset.shape[0] != self._indptr[-1]:
-                raise ValueError("'indices' dataset should have length equal to the number of non-zero elements")
+                raise ValueError(
+                    "'indices' dataset should have length equal to the number of non-zero elements"
+                )
             if not issubdtype(idset.dtype, integer):
                 raise ValueError("'indices' dataset should contain integers")
-            self._modify_index_dtype = (index_dtype is not None and index_dtype != idset.dtype)
+            self._modify_index_dtype = (
+                index_dtype is not None and index_dtype != idset.dtype
+            )
             if not self._modify_index_dtype:
                 index_dtype = idset.dtype
             self._index_dtype = index_dtype
@@ -202,32 +227,30 @@ def is_sparse_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
 
 @chunk_grid.register
 def chunk_grid_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
-    """
-    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
+    """See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
 
-    The cost factor is set to 20 to reflect the computational work involved in
-    extracting data from disk.
+    The cost factor is set to 20 to reflect the computational work involved in extracting data from disk.
     """
     if x._by_column:
         chunks = (x._shape[0], 1)
     else:
         chunks = (1, x._shape[1])
-    return chunk_shape_to_grid(chunks, x.shape, cost_factor=20) 
+    return chunk_shape_to_grid(chunks, x.shape, cost_factor=20)
 
 
 def _extract_array(
-    x: Hdf5CompressedSparseMatrixSeed, 
-    primary_sub: Sequence[int], 
-    secondary_sub: Sequence[int], 
-    secondary_len: int, 
-    f_individual: Callable, 
-    f_consecutive: Callable
+    x: Hdf5CompressedSparseMatrixSeed,
+    primary_sub: Sequence[int],
+    secondary_sub: Sequence[int],
+    secondary_len: int,
+    f_individual: Callable,
+    f_consecutive: Callable,
 ):
     if len(secondary_sub) == 0:
         return
     secondary_start = secondary_sub[0]
     secondary_end = secondary_sub[-1] + 1
-    is_consecutive = (secondary_end - secondary_start == len(secondary_sub))
+    is_consecutive = secondary_end - secondary_start == len(secondary_sub)
     search_start = secondary_start > 0
     search_end = secondary_end < secondary_len
 
@@ -241,12 +264,14 @@ def _extract_array(
             curdata = data[start_pos:end_pos]
             curindices = indices[start_pos:end_pos]
 
-            start_idx = 0 
+            start_idx = 0
             if search_start:
                 start_idx = bisect_left(curindices, secondary_start)
             end_idx = len(curindices)
             if search_end:
-                end_idx = bisect_left(curindices, secondary_end, lo=start_idx, hi=end_idx)
+                end_idx = bisect_left(
+                    curindices, secondary_end, lo=start_idx, hi=end_idx
+                )
 
             if is_consecutive:
                 mod_indices = curindices[start_idx:end_idx]
@@ -267,45 +292,52 @@ def _extract_array(
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]) -> numpy.ndarray:
+def extract_dense_array_Hdf5CompressedSparseMatrixSeed(
+    x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]
+) -> numpy.ndarray:
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     output = zeros((len(subset[0]), len(subset[1])), dtype=x.dtype, order="F")
 
-    if x._by_column: 
+    if x._by_column:
         primary_sub = subset[1]
         secondary_sub = subset[0]
         secondary_len = x.shape[0]
 
         def _individual(c, r, value):
-            output[r,c] = value
+            output[r, c] = value
+
         def _consecutive(c, rows, values):
-            output[rows,c] = values
+            output[rows, c] = values
+
     else:
         primary_sub = subset[0]
         secondary_sub = subset[1]
         secondary_len = x.shape[1]
 
         def _individual(r, c, value):
-            output[r,c] = value
+            output[r, c] = value
+
         def _consecutive(r, cols, values):
-            output[r,cols] = values
+            output[r, cols] = values
 
     _extract_array(
-        x=x, 
-        primary_sub=primary_sub, 
-        secondary_sub=secondary_sub, 
-        secondary_len=secondary_len, 
-        f_individual=_individual, 
-        f_consecutive=_consecutive
+        x=x,
+        primary_sub=primary_sub,
+        secondary_sub=secondary_sub,
+        secondary_len=secondary_len,
+        f_individual=_individual,
+        f_consecutive=_consecutive,
     )
 
     return output
 
 
 @extract_sparse_array.register
-def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]) -> SparseNdarray:
+def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(
+    x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]
+) -> SparseNdarray:
     """See :py:meth:`~delayedarray.extract_sparse_array.extract_sparse_array`."""
-    if x._by_column: 
+    if x._by_column:
         primary_sub = subset[1]
         secondary_sub = subset[0]
         primary_len = x.shape[1]
@@ -320,62 +352,76 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseM
     for i in range(len(subset[1])):
         output.append(([], []))
 
-    if x._by_column: 
+    if x._by_column:
+
         def _individual(c, r, value):
             output[c][0].append(r)
             output[c][1].append(value)
+
         def _consecutive(c, rows, values):
             output[c] = (rows, values)
+
     else:
+
         def _individual(r, c, value):
             output[c][0].append(r)
             output[c][1].append(value)
+
         def _consecutive(r, cols, values):
             for j, c in enumerate(cols):
                 output[c][0].append(r)
                 output[c][1].append(values[j])
 
     _extract_array(
-        x=x, 
-        primary_sub=primary_sub, 
-        secondary_sub=secondary_sub, 
-        secondary_len=secondary_len, 
-        f_individual=_individual, 
-        f_consecutive=_consecutive
+        x=x,
+        primary_sub=primary_sub,
+        secondary_sub=secondary_sub,
+        secondary_len=secondary_len,
+        f_individual=_individual,
+        f_consecutive=_consecutive,
     )
 
     all_none = True
     for i, con in enumerate(output):
-        if len(con[0]) ==  0:
+        if len(con[0]) == 0:
             output[i] = None
         else:
-            output[i] = (array(con[0], dtype=x._index_dtype, copy=False), array(con[1], dtype=x._dtype, copy=False))
+            output[i] = (
+                array(con[0], dtype=x._index_dtype, copy=False),
+                array(con[1], dtype=x._dtype, copy=False),
+            )
             all_none = False
     if all_none:
         output = None
 
     return SparseNdarray(
-        shape=(len(subset[0]), len(subset[1])), 
-        contents=output, 
-        dtype=x._dtype, 
+        shape=(len(subset[0]), len(subset[1])),
+        contents=output,
+        dtype=x._dtype,
         index_dtype=x._index_dtype,
         check=False,
     )
 
 
 class Hdf5CompressedSparseMatrix(DelayedArray):
-    """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``. This
-    subclass allows developers to implement custom methods for HDF5-backed
-    sparse matrices."""
+    """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``.
 
-    def __init__(self, path: str, group_name: Optional[str], shape: Tuple[int, int], by_column: bool, **kwargs):
-        """
-        To construct a ``Hdf5CompressedSparseMatrix`` from an existing
-        :py:class:`~Hdf5CompressedSparseMatrixSeed`, use
-        :py:meth:`~delayedarray.wrap.wrap` instead.
+    This subclass allows developers to implement custom methods for HDF5-backed sparse matrices.
+    """
+
+    def __init__(
+        self,
+        path: str,
+        group_name: Optional[str],
+        shape: Tuple[int, int],
+        by_column: bool,
+        **kwargs
+    ):
+        """To construct a ``Hdf5CompressedSparseMatrix`` from an existing :py:class:`~Hdf5CompressedSparseMatrixSeed`,
+        use :py:meth:`~delayedarray.wrap.wrap` instead.
 
         Args:
-            path: 
+            path:
                 Path to the HDF5 file.
 
             group_name:
@@ -395,7 +441,9 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
         if isinstance(path, Hdf5CompressedSparseMatrixSeed):
             seed = path
         else:
-            seed = Hdf5CompressedSparseMatrixSeed(path, group_name, shape, by_column, **kwargs)
+            seed = Hdf5CompressedSparseMatrixSeed(
+                path, group_name, shape, by_column, **kwargs
+            )
         super(Hdf5CompressedSparseMatrix, self).__init__(seed)
 
     @property
@@ -467,12 +515,15 @@ def is_masked_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed) 
     """See :py:meth:`~delayedarray.is_masked.is_masked`."""
     return False
 
+
 if is_package_installed("scipy"):
     import scipy.sparse
     from delayedarray.to_scipy_sparse_matrix import to_scipy_sparse_matrix
 
     @to_scipy_sparse_matrix.register
-    def to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix(x: Hdf5CompressedSparseMatrix, format: Literal["coo", "csr", "csc"] = "csc") -> scipy.sparse.spmatrix:
+    def to_scipy_sparse_matrix_from_Hdf5CompressedSparseMatrix(
+        x: Hdf5CompressedSparseMatrix, format: Literal["coo", "csr", "csc"] = "csc"
+    ) -> scipy.sparse.spmatrix:
         """See :py:func:`delayedarray.to_scipy_sparse_matrix.to_scipy_sparse_matrix`."""
 
         with File(x.path, "r") as handle:
@@ -481,9 +532,13 @@ if is_package_installed("scipy"):
             _indptr = handle[x.indptr_name][:]
 
             if x.by_column:
-                _matrix = scipy.sparse.csc_matrix((_data, _indices, _indptr), shape=x.shape, dtype=x.dtype)
+                _matrix = scipy.sparse.csc_matrix(
+                    (_data, _indices, _indptr), shape=x.shape, dtype=x.dtype
+                )
             else:
-                _matrix = scipy.sparse.csr_matrix((_data, _indices, _indptr), shape=x.shape, dtype=x.dtype)
+                _matrix = scipy.sparse.csr_matrix(
+                    (_data, _indices, _indptr), shape=x.shape, dtype=x.dtype
+                )
 
         if format == "csc":
             return _matrix.tocsc()

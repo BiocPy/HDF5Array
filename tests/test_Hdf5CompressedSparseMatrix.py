@@ -63,7 +63,7 @@ def test_Hdf5CompressedSparseMatrix_row():
     path, group = _mockup(y)
     arr = Hdf5CompressedSparseMatrix(path, group, shape=shape, by_column=False)
 
-    assert arr.shape == shape 
+    assert arr.shape == shape
     assert arr.dtype == y.dtype
     assert chunk_shape(arr) == (1, 200)
     assert (delayedarray.to_dense_array(arr) == y.toarray()).all()
@@ -93,9 +93,16 @@ def test_Hdf5CompressedSparseMatrix_dtype():
     shape = (55, 45)
     y = (scipy.sparse.random(*shape, 0.2) * 10).tocsc().astype(numpy.int32)
     path, group = _mockup(y)
-    arr = Hdf5CompressedSparseMatrix(path, group, shape=shape, by_column=True, dtype=numpy.int16, index_dtype=numpy.uint8)
+    arr = Hdf5CompressedSparseMatrix(
+        path,
+        group,
+        shape=shape,
+        by_column=True,
+        dtype=numpy.int16,
+        index_dtype=numpy.uint8,
+    )
 
-    assert arr.shape == shape 
+    assert arr.shape == shape
     assert arr.dtype == numpy.int16
     assert chunk_shape(arr) == (55, 1)
 
@@ -124,6 +131,7 @@ def test_Hdf5CompressedSparseMatrix_properties():
 
     rewrap = delayedarray.wrap(arr.seed)
     assert isinstance(rewrap, Hdf5CompressedSparseMatrix)
+
 
 def test_Hdf5CompressedSparseMatrix_to_sparse():
     shape = (100, 200)

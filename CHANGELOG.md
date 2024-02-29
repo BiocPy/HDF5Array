@@ -11,5 +11,3 @@
 ## Version 0.0.1
 
 - initial classes for H5 backed matrices
-
-

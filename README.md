@@ -100,9 +100,9 @@ The constructor will not do any auto-detection so we need to provide this inform
 ```python
 import hdf5array
 arr = hdf5array.Hdf5CompressedSparseMatrix(
-    "sparse_whee.h5", 
-    "sparse_blah", 
-    shape=(100, 200), 
+    "sparse_whee.h5",
+    "sparse_blah",
+    shape=(100, 200),
     by_column=True
 )
 ## <100 x 200> sparse Hdf5CompressedSparseMatrix object of type 'float64'
