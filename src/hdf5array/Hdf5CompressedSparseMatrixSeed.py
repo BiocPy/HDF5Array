@@ -23,8 +23,9 @@ __license__ = "MIT"
 
 
 class Hdf5CompressedSparseMatrixSeed:
-    """Compressed sparse matrix stored in a HDF5 file, represented as a
-    ``DelayedArray`` seed. This assumes that there are three datasets; ``data``
+    """Compressed sparse matrix stored in a HDF5 file, represented as a ``DelayedArray`` seed.
+
+    This assumes that there are three datasets; ``data``
     containing the data values, ``indices`` containing the indices, and
     ``indptr`` containing the pointers to the start of every row/column.
     """
@@ -226,11 +227,9 @@ def is_sparse_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
 
 @chunk_grid.register
 def chunk_grid_Hdf5CompressedSparseMatrixSeed(x: Hdf5CompressedSparseMatrixSeed):
-    """
-    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
+    """See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
 
-    The cost factor is set to 20 to reflect the computational work involved in
-    extracting data from disk.
+    The cost factor is set to 20 to reflect the computational work involved in extracting data from disk.
     """
     if x._by_column:
         chunks = (x._shape[0], 1)
@@ -405,9 +404,7 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(
 
 
 class Hdf5CompressedSparseMatrix(DelayedArray):
-    """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``. This
-    subclass allows developers to implement custom methods for HDF5-backed
-    sparse matrices."""
+    """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``.
 
     def __init__(
         self,

@@ -114,11 +114,9 @@ class Hdf5DenseArraySeed:
 
 @chunk_grid.register
 def chunk_grid_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
-    """
-    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
+    """See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
 
-    The cost factor is set to 20 to reflect the computational work involved in
-    extracting data from disk.
+    The cost factor is set to 20 to reflect the computational work involved in extracting data from disk.
     """
     return chunk_shape_to_grid(x._chunks, x._shape, cost_factor=20)
 
@@ -184,14 +182,14 @@ def extract_dense_array_Hdf5DenseArraySeed(
 
 
 class Hdf5DenseArray(DelayedArray):
-    """HDF5-backed dataset as a ``DelayedArray`` dense array. This subclass
-    allows developers to implement custom methods for HDF5-backed arrays."""
+    """HDF5-backed dataset as a ``DelayedArray`` dense array.
+
+    This subclass allows developers to implement custom methods for HDF5-backed arrays.
+    """
 
     def __init__(self, path: str, name: str, **kwargs):
-        """
-        To construct a ``Hdf5DenseArray`` from an existing
-        :py:class:`~Hdf5DenseArraySeed`, use :py:meth:`~delayedarray.wrap.wrap`
-        instead.
+        """To construct a ``Hdf5DenseArray`` from an existing :py:class:`~Hdf5DenseArraySeed`, use
+        :py:meth:`~delayedarray.wrap.wrap` instead.
 
         Args:
             path:
