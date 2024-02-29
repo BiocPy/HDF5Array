@@ -15,7 +15,7 @@ from delayedarray import (
     wrap,
 )
 from h5py import File
-from numpy import array, dtype, integer, issubdtype, ndarray, zeros
+from numpy import array, dtype, integer, issubdtype, zeros
 
 __author__ = "LTLA"
 __copyright__ = "LTLA"
@@ -414,9 +414,8 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
         by_column: bool,
         **kwargs
     ):
-        """To construct a ``Hdf5CompressedSparseMatrix`` from an existing
-        :py:class:`~Hdf5CompressedSparseMatrixSeed`, use
-        :py:meth:`~delayedarray.wrap.wrap` instead.
+        """To construct a ``Hdf5CompressedSparseMatrix`` from an existing :py:class:`~Hdf5CompressedSparseMatrixSeed`,
+        use :py:meth:`~delayedarray.wrap.wrap` instead.
 
         Args:
             path:
