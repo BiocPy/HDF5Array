@@ -1,8 +1,16 @@
-from typing import Optional, Sequence, Tuple, Union
-from delayedarray import extract_dense_array, chunk_grid, DelayedArray, wrap, is_masked, chunk_shape_to_grid
-from h5py import File
+from typing import Optional, Sequence, Tuple
+
 import numpy
-from numpy import ndarray, dtype, asfortranarray, ix_
+from delayedarray import (
+    DelayedArray,
+    chunk_grid,
+    chunk_shape_to_grid,
+    extract_dense_array,
+    is_masked,
+    wrap,
+)
+from h5py import File
+from numpy import asfortranarray, dtype, ix_
 
 __author__ = "LTLA"
 __copyright__ = "LTLA"
@@ -12,10 +20,16 @@ __license__ = "MIT"
 class Hdf5DenseArraySeed:
     """HDF5-backed dataset as a ``DelayedArray`` dense array seed."""
 
-    def __init__(self, path: str, name: str, dtype: Optional[dtype] = None, native_order: bool = False) -> None:
+    def __init__(
+        self,
+        path: str,
+        name: str,
+        dtype: Optional[dtype] = None,
+        native_order: bool = False,
+    ) -> None:
         """
         Args:
-            path: 
+            path:
                 Path to the HDF5 file.
 
             name:
@@ -25,14 +39,14 @@ class Hdf5DenseArraySeed:
                 NumPy type of the data. Defaults to the HDF5 type on disk;
                 otherwise, values are transformed to ``dtype`` during extraction.
 
-            native_order: 
+            native_order:
                 Whether to use HDF5's native order of dimensions. HDF5 orders dimensions
                 by slowest to fastest changing. If ``native`` is True, the same ordering
                 is used for this array, i.e., this array's shape is the same as that
                 reported in the file, equivalent to C storage order.
 
                 If False, this array's shape is reversed compared to that reported in the
-                file, equivalent to Fortran storage order. In this case, the first 
+                file, equivalent to Fortran storage order. In this case, the first
                 dimension in this array will be the fastest changing one, etc.
         """
         self._path = path
@@ -42,7 +56,7 @@ class Hdf5DenseArraySeed:
         with File(self._path, "r") as handle:
             dset = handle[name]
 
-            self._modify_dtype = (dtype is not None and dtype != dset.dtype)
+            self._modify_dtype = dtype is not None and dtype != dset.dtype
             if not self._modify_dtype:
                 dtype = dset.dtype
             self._dtype = dtype
@@ -100,22 +114,22 @@ class Hdf5DenseArraySeed:
 
 @chunk_grid.register
 def chunk_grid_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
-    """
-    See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
+    """See :py:meth:`~delayedarray.chunk_grid.chunk_grid`.
 
-    The cost factor is set to 20 to reflect the computational work involved in
-    extracting data from disk.
+    The cost factor is set to 20 to reflect the computational work involved in extracting data from disk.
     """
-    return chunk_shape_to_grid(x._chunks, x._shape, cost_factor=20) 
+    return chunk_shape_to_grid(x._chunks, x._shape, cost_factor=20)
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Tuple[Sequence[int], ...]) -> numpy.ndarray:
+def extract_dense_array_Hdf5DenseArraySeed(
+    x: Hdf5DenseArraySeed, subset: Tuple[Sequence[int], ...]
+) -> numpy.ndarray:
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     converted = []
     num_lists = 0
     for s in subset:
-        if isinstance(s, range): # convert back to slice for HDF5 access efficiency.
+        if isinstance(s, range):  # convert back to slice for HDF5 access efficiency.
             converted.append(slice(s.start, s.stop, s.step))
         else:
             num_lists += 1
@@ -168,17 +182,17 @@ def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Tuple[
 
 
 class Hdf5DenseArray(DelayedArray):
-    """HDF5-backed dataset as a ``DelayedArray`` dense array. This subclass
-    allows developers to implement custom methods for HDF5-backed arrays."""
+    """HDF5-backed dataset as a ``DelayedArray`` dense array.
+
+    This subclass allows developers to implement custom methods for HDF5-backed arrays.
+    """
 
     def __init__(self, path: str, name: str, **kwargs):
-        """
-        To construct a ``Hdf5DenseArray`` from an existing
-        :py:class:`~Hdf5DenseArraySeed`, use :py:meth:`~delayedarray.wrap.wrap`
-        instead.
+        """To construct a ``Hdf5DenseArray`` from an existing :py:class:`~Hdf5DenseArraySeed`, use
+        :py:meth:`~delayedarray.wrap.wrap` instead.
 
         Args:
-            path: 
+            path:
                 Path to the HDF5 file.
 
             name:

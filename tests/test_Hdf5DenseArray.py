@@ -23,7 +23,7 @@ def test_Hdf5DenseArray_native():
     test_shape = (100, 200)
     y = numpy.random.rand(*test_shape)
     chunk_sizes = (10, 20)
-    path, name = _mockup(y, chunk_sizes, 'gzip')
+    path, name = _mockup(y, chunk_sizes, "gzip")
     arr = Hdf5DenseArray(path, name, native_order=True)
 
     assert arr.shape == y.shape
@@ -51,7 +51,7 @@ def test_Hdf5DenseArray_non_native():
     test_shape = (100, 200)
     y = numpy.random.rand(*test_shape)
     chunk_sizes = (10, 20)
-    path, name = _mockup(y, chunk_sizes, 'gzip')
+    path, name = _mockup(y, chunk_sizes, "gzip")
     arr = Hdf5DenseArray(path, name, native_order=False)
 
     actual_shape = (*list(reversed(test_shape)),)
@@ -80,7 +80,7 @@ def test_Hdf5DenseArray_new_type():
     test_shape = (100, 200)
     y = numpy.random.rand(*test_shape) * 10
     chunk_sizes = (10, 20)
-    path, name = _mockup(y, chunk_sizes, 'gzip')
+    path, name = _mockup(y, chunk_sizes, "gzip")
     arr = Hdf5DenseArray(path, name, dtype=numpy.dtype("int32"), native_order=True)
 
     assert arr.shape == test_shape
@@ -93,7 +93,7 @@ def test_Hdf5DenseArray_properties():
     test_shape = (100, 200)
     y = numpy.random.rand(*test_shape) * 10
     chunk_sizes = (10, 20)
-    path, name = _mockup(y, chunk_sizes, 'gzip')
+    path, name = _mockup(y, chunk_sizes, "gzip")
     arr = Hdf5DenseArray(path, name, dtype=numpy.dtype("int32"), native_order=True)
 
     assert arr.path == path
