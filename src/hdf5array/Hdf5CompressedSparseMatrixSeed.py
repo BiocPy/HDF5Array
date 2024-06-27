@@ -15,7 +15,7 @@ from delayedarray import (
     wrap,
 )
 from h5py import File
-from numpy import array, dtype, integer, issubdtype, zeros
+from numpy import asarray, dtype, integer, issubdtype, zeros
 
 __author__ = "LTLA"
 __copyright__ = "LTLA"
@@ -387,8 +387,8 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(
             output[i] = None
         else:
             output[i] = (
-                array(con[0], dtype=x._index_dtype, copy=False),
-                array(con[1], dtype=x._dtype, copy=False),
+                asarray(con[0], dtype=x._index_dtype),
+                asarray(con[1], dtype=x._dtype),
             )
             all_none = False
     if all_none:
