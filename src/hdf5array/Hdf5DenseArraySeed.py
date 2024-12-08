@@ -122,9 +122,7 @@ def chunk_grid_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5DenseArraySeed(
-    x: Hdf5DenseArraySeed, subset: Tuple[Sequence[int], ...]
-) -> numpy.ndarray:
+def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Tuple[Sequence[int], ...]) -> numpy.ndarray:
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     converted = []
     num_lists = 0
