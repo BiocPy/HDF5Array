@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.3.0
+## Version 0.5.0
 
 - chore: Remove Python 3.8 (EOL)
 - precommit: Replace docformatter with ruff's formatter
