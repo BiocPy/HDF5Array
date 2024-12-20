@@ -98,22 +98,14 @@ class Hdf5CompressedSparseMatrixSeed:
 
         with File(self._path, "r") as handle:
             self._indptr = handle[self._indptr_name][:]
-            if len(self._indptr.shape) != 1 or not issubdtype(
-                self._indptr.dtype, integer
-            ):
-                raise ValueError(
-                    "'indptr' dataset should be 1-dimensional and contain integers"
-                )
+            if len(self._indptr.shape) != 1 or not issubdtype(self._indptr.dtype, integer):
+                raise ValueError("'indptr' dataset should be 1-dimensional and contain integers")
             if by_column:
                 if len(self._indptr) != shape[1] + 1:
-                    raise ValueError(
-                        "'indptr' dataset should have length equal to the number of columns + 1"
-                    )
+                    raise ValueError("'indptr' dataset should have length equal to the number of columns + 1")
             else:
                 if len(self._indptr) != shape[0] + 1:
-                    raise ValueError(
-                        "'indptr' dataset should have length equal to the number of columns + 1"
-                    )
+                    raise ValueError("'indptr' dataset should have length equal to the number of columns + 1")
             if self._indptr[0] != 0:
                 raise ValueError("first entry of 'indptr' dataset should be zero")
             for i in range(1, len(self._indptr)):
@@ -122,9 +114,7 @@ class Hdf5CompressedSparseMatrixSeed:
 
             ddset = handle[self._data_name]
             if len(ddset.shape) != 1 or ddset.shape[0] != self._indptr[-1]:
-                raise ValueError(
-                    "'data' dataset should have length equal to the number of non-zero elements"
-                )
+                raise ValueError("'data' dataset should have length equal to the number of non-zero elements")
             self._modify_dtype = dtype is not None and dtype != ddset.dtype
             if not self._modify_dtype:
                 dtype = ddset.dtype
@@ -133,14 +123,10 @@ class Hdf5CompressedSparseMatrixSeed:
             # Not going to check for consistency of the indices themselves.
             idset = handle[self._indices_name]
             if len(idset.shape) != 1 or idset.shape[0] != self._indptr[-1]:
-                raise ValueError(
-                    "'indices' dataset should have length equal to the number of non-zero elements"
-                )
+                raise ValueError("'indices' dataset should have length equal to the number of non-zero elements")
             if not issubdtype(idset.dtype, integer):
                 raise ValueError("'indices' dataset should contain integers")
-            self._modify_index_dtype = (
-                index_dtype is not None and index_dtype != idset.dtype
-            )
+            self._modify_index_dtype = index_dtype is not None and index_dtype != idset.dtype
             if not self._modify_index_dtype:
                 index_dtype = idset.dtype
             self._index_dtype = index_dtype
@@ -269,9 +255,7 @@ def _extract_array(
                 start_idx = bisect_left(curindices, secondary_start)
             end_idx = len(curindices)
             if search_end:
-                end_idx = bisect_left(
-                    curindices, secondary_end, lo=start_idx, hi=end_idx
-                )
+                end_idx = bisect_left(curindices, secondary_end, lo=start_idx, hi=end_idx)
 
             if is_consecutive:
                 mod_indices = curindices[start_idx:end_idx]
@@ -406,14 +390,7 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(
 class Hdf5CompressedSparseMatrix(DelayedArray):
     """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``."""
 
-    def __init__(
-        self,
-        path: str,
-        group_name: Optional[str],
-        shape: Tuple[int, int],
-        by_column: bool,
-        **kwargs
-    ):
+    def __init__(self, path: str, group_name: Optional[str], shape: Tuple[int, int], by_column: bool, **kwargs):
         """To construct a ``Hdf5CompressedSparseMatrix`` from an existing :py:class:`~Hdf5CompressedSparseMatrixSeed`,
         use :py:meth:`~delayedarray.wrap.wrap` instead.
 
@@ -439,9 +416,7 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
         if isinstance(path, Hdf5CompressedSparseMatrixSeed):
             seed = path
         else:
-            seed = Hdf5CompressedSparseMatrixSeed(
-                path, group_name, shape, by_column, **kwargs
-            )
+            seed = Hdf5CompressedSparseMatrixSeed(path, group_name, shape, by_column, **kwargs)
         super(Hdf5CompressedSparseMatrix, self).__init__(seed)
 
     @property
@@ -530,13 +505,9 @@ if is_package_installed("scipy"):
             _indptr = handle[x.indptr_name][:]
 
             if x.by_column:
-                _matrix = scipy.sparse.csc_matrix(
-                    (_data, _indices, _indptr), shape=x.shape, dtype=x.dtype
-                )
+                _matrix = scipy.sparse.csc_matrix((_data, _indices, _indptr), shape=x.shape, dtype=x.dtype)
             else:
-                _matrix = scipy.sparse.csr_matrix(
-                    (_data, _indices, _indptr), shape=x.shape, dtype=x.dtype
-                )
+                _matrix = scipy.sparse.csr_matrix((_data, _indices, _indptr), shape=x.shape, dtype=x.dtype)
 
         if format == "csc":
             return _matrix.tocsc()
