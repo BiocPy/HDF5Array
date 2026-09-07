@@ -37,9 +37,11 @@ Let's mock up a dense array:
 
 ```python
 import numpy
+
 data = numpy.random.rand(40, 50, 100)
 
 import h5py
+
 with h5py.File("whee.h5", "w") as handle:
     handle.create_dataset("yay", data=data)
 ```
@@ -48,6 +50,7 @@ We can now represent it as a `Hdf5DenseArray`:
 
 ```python
 import hdf5array
+
 arr = hdf5array.Hdf5DenseArray("whee.h5", "yay", native_order=True)
 ## <40 x 50 x 100> Hdf5DenseArray object of type 'float64'
 ## [[[0.63008796, 0.34849183, 0.75621679, ..., 0.07343495, 0.63095765,
@@ -85,6 +88,7 @@ To demonstrate, let's mock up some sparse data using **scipy**:
 
 ```python
 import scipy.sparse
+
 mock = scipy.sparse.random(1000, 200, 0.1).tocsc()
 
 with h5py.File("sparse_whee.h5", "w") as handle:
@@ -99,12 +103,8 @@ The constructor will not do any auto-detection so we need to provide this inform
 
 ```python
 import hdf5array
-arr = hdf5array.Hdf5CompressedSparseMatrix(
-    "sparse_whee.h5",
-    "sparse_blah",
-    shape=(100, 200),
-    by_column=True
-)
+
+arr = hdf5array.Hdf5CompressedSparseMatrix("sparse_whee.h5", "sparse_blah", shape=(100, 200), by_column=True)
 ## <100 x 200> sparse Hdf5CompressedSparseMatrix object of type 'float64'
 ## [[0.        , 0.        , 0.26563417, ..., 0.        , 0.        ,
 ##   0.        ],
