@@ -1,4 +1,4 @@
-from typing import Optional, Sequence, Tuple
+from collections.abc import Sequence
 
 import numpy
 from delayedarray import (
@@ -24,7 +24,7 @@ class Hdf5DenseArraySeed:
         self,
         path: str,
         name: str,
-        dtype: Optional[dtype] = None,
+        dtype: dtype | None = None,
         native_order: bool = False,
     ) -> None:
         """
@@ -88,7 +88,7 @@ class Hdf5DenseArraySeed:
         return self._dtype
 
     @property
-    def shape(self) -> Tuple[int, ...]:
+    def shape(self) -> tuple[int, ...]:
         """
         Returns:
             Tuple containing the dimensions of this array.
@@ -122,7 +122,7 @@ def chunk_grid_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed):
 
 
 @extract_dense_array.register
-def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: Tuple[Sequence[int], ...]) -> numpy.ndarray:
+def extract_dense_array_Hdf5DenseArraySeed(x: Hdf5DenseArraySeed, subset: tuple[Sequence[int], ...]) -> numpy.ndarray:
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     converted = []
     num_lists = 0
@@ -204,7 +204,7 @@ class Hdf5DenseArray(DelayedArray):
             seed = path
         else:
             seed = Hdf5DenseArraySeed(path, name, **kwargs)
-        super(Hdf5DenseArray, self).__init__(seed)
+        super().__init__(seed)
 
     @property
     def path(self) -> str:

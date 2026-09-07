@@ -1,5 +1,6 @@
 from bisect import bisect_left
-from typing import Callable, Literal, Optional, Sequence, Tuple
+from collections.abc import Callable, Sequence
+from typing import Literal
 
 import numpy
 from biocutils.package_utils import is_package_installed
@@ -33,14 +34,14 @@ class Hdf5CompressedSparseMatrixSeed:
     def __init__(
         self,
         path: str,
-        group_name: Optional[str],
-        shape: Tuple[int, int],
+        group_name: str | None,
+        shape: tuple[int, int],
         by_column: bool,
-        dtype: Optional[dtype] = None,
-        index_dtype: Optional[dtype] = None,
-        data_name: Optional[str] = None,
-        indices_name: Optional[str] = None,
-        indptr_name: Optional[str] = None,
+        dtype: dtype | None = None,
+        index_dtype: dtype | None = None,
+        data_name: str | None = None,
+        indices_name: str | None = None,
+        indptr_name: str | None = None,
     ):
         """
         Args:
@@ -140,7 +141,7 @@ class Hdf5CompressedSparseMatrixSeed:
         return self._dtype
 
     @property
-    def shape(self) -> Tuple[int, int]:
+    def shape(self) -> tuple[int, int]:
         """
         Returns:
             Tuple containing the dimensions of this matrix.
@@ -172,7 +173,7 @@ class Hdf5CompressedSparseMatrixSeed:
         return self._by_column
 
     @property
-    def group_name(self) -> Optional[str]:
+    def group_name(self) -> str | None:
         """
         Returns:
             Name of the HDF5 group containing the matrix contents, or None if
@@ -277,7 +278,7 @@ def _extract_array(
 
 @extract_dense_array.register
 def extract_dense_array_Hdf5CompressedSparseMatrixSeed(
-    x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]
+    x: Hdf5CompressedSparseMatrixSeed, subset: tuple[Sequence[int], ...]
 ) -> numpy.ndarray:
     """See :py:meth:`~delayedarray.extract_dense_array.extract_dense_array`."""
     output = zeros((len(subset[0]), len(subset[1])), dtype=x.dtype, order="F")
@@ -318,7 +319,7 @@ def extract_dense_array_Hdf5CompressedSparseMatrixSeed(
 
 @extract_sparse_array.register
 def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(
-    x: Hdf5CompressedSparseMatrixSeed, subset: Tuple[Sequence[int], ...]
+    x: Hdf5CompressedSparseMatrixSeed, subset: tuple[Sequence[int], ...]
 ) -> SparseNdarray:
     """See :py:meth:`~delayedarray.extract_sparse_array.extract_sparse_array`."""
     if x._by_column:
@@ -390,7 +391,7 @@ def extract_sparse_array_Hdf5CompressedSparseMatrixSeed(
 class Hdf5CompressedSparseMatrix(DelayedArray):
     """Compressed sparse matrix in a HDF5 file as a ``DelayedArray``."""
 
-    def __init__(self, path: str, group_name: Optional[str], shape: Tuple[int, int], by_column: bool, **kwargs):
+    def __init__(self, path: str, group_name: str | None, shape: tuple[int, int], by_column: bool, **kwargs):
         """To construct a ``Hdf5CompressedSparseMatrix`` from an existing :py:class:`~Hdf5CompressedSparseMatrixSeed`,
         use :py:meth:`~delayedarray.wrap.wrap` instead.
 
@@ -417,7 +418,7 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
             seed = path
         else:
             seed = Hdf5CompressedSparseMatrixSeed(path, group_name, shape, by_column, **kwargs)
-        super(Hdf5CompressedSparseMatrix, self).__init__(seed)
+        super().__init__(seed)
 
     @property
     def path(self) -> str:
@@ -444,7 +445,7 @@ class Hdf5CompressedSparseMatrix(DelayedArray):
         return self.seed.by_column
 
     @property
-    def group_name(self) -> Optional[str]:
+    def group_name(self) -> str | None:
         """
         Returns:
             Name of the HDF5 group containing the matrix contents, or None if
